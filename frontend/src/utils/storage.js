@@ -87,8 +87,13 @@ export function getUsers() {
 
 /** Return posts or a safe empty fallback; never invent demo posts. */
 export function getPosts() {
-  const result = readCollection(POSTS_KEY, isPost);
+  const result = readPosts();
   return result.ok ? result.value : [];
+}
+
+/** Read posts with error detail so discovery can distinguish empty from unreadable data. */
+export function readPosts() {
+  return readCollection(POSTS_KEY, isPost);
 }
 
 /** Save only wholly valid arrays and report serialization or browser write failures. */

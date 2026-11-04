@@ -16,7 +16,7 @@ test('register, reload, logout and log in again with durable browser data', asyn
   await page.getByRole('button', { name: 'Mira profile' }).click();
   await page.getByRole('button', { name: 'Logout' }).click();
   expect(await page.evaluate(() => localStorage.getItem('writespace_session'))).toBeNull();
-  await page.getByRole('link', { name: 'Login', exact: true }).click();
+  await page.getByRole('navigation', { name: 'Public navigation' }).getByRole('link', { name: 'Login', exact: true }).click();
   await page.getByLabel('Username', { exact: true }).fill('mira');
   await page.getByLabel('Password', { exact: true }).fill('demo');
   await page.getByRole('button', { name: 'Login', exact: true }).click();

@@ -1,4 +1,4 @@
-/** Compose only the identity slice; unbuilt destinations share a neutral local fallback. */
+/** Compose identity and public discovery; unbuilt destinations retain a neutral local fallback. */
 import { useEffect, useState } from 'react';
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { getSession, homeFor } from './utils/auth.js';
@@ -7,6 +7,7 @@ import { Navbar } from './components/Navbar.jsx';
 import { ProtectedRoute } from './components/ProtectedRoute.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
+import LandingPage from './pages/LandingPage.jsx';
 
 /** Keep an unknown or not-yet-built route usable without fabricating a feature page. */
 function NotFound() {
@@ -48,6 +49,7 @@ export default function App() {
         <Navbar session={session} onSessionChange={refreshSession} />
       )}
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={
           current ? <Navigate to={homeFor(current)} replace /> : <LoginPage onSessionChange={refreshSession} />
         } />

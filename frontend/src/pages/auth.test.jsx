@@ -1,6 +1,6 @@
 /** Exercise actual auth forms, fresh localStorage state, route guards and explicit navigation. */
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import App from '../App.jsx';
@@ -56,10 +56,11 @@ describe('auth pages and navigation', () => {
     await user.click(screen.getByRole('link', { name: 'Go to Dashboard' }));
     expect(screen.getByLabelText('Location')).toHaveTextContent('/blogs');
   });
-  it('renders the neutral fallback and public links without writing or navigating until activation', async () => {
-    const user = userEvent.setup(); mount(); expect(screen.getByRole('heading', { name: 'Page not found' })).toBeInTheDocument();
+  it('renders the public landing without writing or navigating until activation', async () => {
+    const user = userEvent.setup(); mount(); expect(screen.getByText('Your thoughts. Your space. Beautifully simple.')).toBeInTheDocument();
     expect(localStorage.length).toBe(0); expect(screen.getByLabelText('Location')).toHaveTextContent('/');
-    await user.click(screen.getByRole('link', { name: 'Login' })); expect(screen.getByLabelText('Location')).toHaveTextContent('/login');
+    await user.click(within(screen.getByRole('navigation', { name: 'Public navigation' })).getByRole('link', { name: 'Login' }));
+    expect(screen.getByLabelText('Location')).toHaveTextContent('/login');
     expect(localStorage.length).toBe(0); expect(screen.getByText(/do not use real passwords/)).toBeInTheDocument();
     await user.click(screen.getByRole('link', { name: 'Register' })); expect(screen.getByLabelText('Display Name')).toBeInTheDocument();
   });
