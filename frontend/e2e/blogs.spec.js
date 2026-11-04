@@ -1,0 +1,136 @@
+/** Author real publishing journeys; the shared fixture captures errors before the first navigation and asserts none. */
+import { test, expect } from './fixtures.js';
+
+/** Register through the real form after entering from a visible registration link. */
+async function register(page, name, username) {
+  await page.getByLabel('Display Name', { exact: true }).fill(name);
+  await page.getByLabel('Username', { exact: true }).fill(username);
+  await page.getByLabel('Password', { exact: true }).fill('demo');
+  await page.getByLabel('Confirm Password', { exact: true }).fill('demo');
+  await page.getByRole('button', { name: 'Register', exact: true }).click();
+  await expect(page).toHaveURL(/\/blogs$/);
+}
+/** Leave a local identity using the existing profile controls. */
+async function logout(page, name) {
+  await page.getByRole('button', { name: name + ' profile' }).click();
+  await page.getByRole('button', { name: 'Logout', exact: true }).click();
+  await expect(page).toHaveURL(/\/$/);
+}
+/** Read the actual persisted collection for metadata and no-op assertions. */
+async function posts(page) {
+  return page.evaluate(() => JSON.parse(localStorage.getItem('writespace_posts')));
+}
+
+test('register, create, reload, read, edit, cancel and delete via real controls', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Get Started', exact: true }).click();
+  await register(page, 'Mira', 'mira');
+  await expect(page.getByText('No blogs yet. Be the first to write one!', { exact: true })).toBeVisible();
+  await page.getByRole('main').getByRole('link', { name: 'Write', exact: true }).click();
+  await page.getByRole('button', { name: 'Save', exact: true }).click();
+  await expect(page.getByText('Title is required.', { exact: true })).toBeVisible();
+  await expect(page.getByText('Content is required.', { exact: true })).toBeVisible();
+  expect(await posts(page)).toBeNull();
+  const content = '  First line\n<img src=x onerror=alert(1)>\nLast line  ';
+  await page.getByLabel('Title', { exact: true }).fill('Field notes');
+  await page.getByLabel('Content', { exact: true }).fill(content);
+  await expect(page.getByText(content.length + ' characters', { exact: true })).toBeVisible();
+  const before = Date.now();
+  await page.getByRole('button', { name: 'Save', exact: true }).click();
+  const [created] = await posts(page);
+  expect(created.id).toMatch(/^[0-9a-f-]{36}$/);
+  expect(Date.parse(created.createdAt)).toBeGreaterThanOrEqual(before);
+  const identity = await page.evaluate(() => JSON.parse(localStorage.getItem('writespace_session')));
+  expect(created).toMatchObject({ title: 'Field notes', content, authorId: identity.userId, authorName: 'Mira' });
+  await expect(page).toHaveURL(new RegExp('/blog/' + created.id + '$'));
+  await page.reload();
+  await expect(page.getByRole('heading', { name: 'Field notes', exact: true })).toBeVisible();
+  expect(await page.locator('article p').first().textContent()).toBe(content);
+  await expect(page.locator('article img, article script')).toHaveCount(0);
+  await page.getByRole('link', { name: 'Back to All Posts', exact: true }).click();
+  await page.getByRole('link', { name: 'Read Field notes', exact: true }).click();
+  await page.getByRole('link', { name: 'Edit', exact: true }).click();
+  await expect(page.getByLabel('Title')).toHaveValue('Field notes');
+  await expect(page.getByLabel('Content')).toHaveValue(content);
+  await page.getByLabel('Title').fill('Revised notes');
+  await page.getByLabel('Content').fill('Revised plain text');
+  await page.getByRole('button', { name: 'Save', exact: true }).click();
+  expect(await posts(page)).toEqual([{ ...created, title: 'Revised notes', content: 'Revised plain text' }]);
+  await page.getByRole('link', { name: 'Edit', exact: true }).click();
+  await page.getByLabel('Title').fill('Discard this');
+  await page.getByRole('link', { name: 'Cancel', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Revised notes', exact: true })).toBeVisible();
+  const unchanged = await posts(page);
+  page.once('dialog', (dialog) => dialog.dismiss());
+  await page.getByRole('button', { name: 'Delete', exact: true }).click();
+  expect(await posts(page)).toEqual(unchanged);
+  await expect(page).toHaveURL(new RegExp('/blog/' + created.id + '$'));
+  page.once('dialog', (dialog) => dialog.accept());
+  await page.getByRole('button', { name: 'Delete', exact: true }).click();
+  await expect(page).toHaveURL(/\/blogs$/);
+  expect(await posts(page)).toEqual([]);
+  await expect(page.getByText('No blogs yet. Be the first to write one!', { exact: true })).toBeVisible();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('writespace_users')).length)).toBe(1);
+});
+
+test('other owner sees read-only posts while Admin edits and deletes original authorship', async ({ page }) => {
+  await page.goto('/register');
+  await register(page, 'Owner', 'owner');
+  await page.getByRole('navigation', { name: 'Workspace navigation' }).getByRole('link', { name: 'Write', exact: true }).click();
+  await page.getByLabel('Title').fill('Owned post');
+  await page.getByLabel('Content').fill('Owner text');
+  await page.getByRole('button', { name: 'Save', exact: true }).click();
+  const [original] = await posts(page);
+  await logout(page, 'Owner');
+  await page.getByRole('link', { name: 'Get Started', exact: true }).click();
+  await register(page, 'Reader', 'reader');
+  await expect(page.getByRole('link', { name: 'Edit Owned post', exact: true })).toHaveCount(0);
+  await page.getByRole('link', { name: 'Read Owned post', exact: true }).click();
+  await expect(page.getByRole('link', { name: 'Edit', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Delete', exact: true })).toHaveCount(0);
+  expect(await posts(page)).toEqual([original]);
+  await logout(page, 'Reader');
+  await page.getByRole('navigation', { name: 'Public navigation' }).getByRole('link', { name: 'Login', exact: true }).click();
+  await page.getByLabel('Username').fill('admin');
+  await page.getByLabel('Password', { exact: true }).fill('admin');
+  await page.getByRole('button', { name: 'Login', exact: true }).click();
+  await page.getByRole('link', { name: 'All Blogs', exact: true }).click();
+  await page.getByRole('link', { name: 'Edit Owned post', exact: true }).click();
+  await page.getByLabel('Title').fill('Admin revision');
+  await page.getByRole('button', { name: 'Save', exact: true }).click();
+  expect(await posts(page)).toEqual([{ ...original, title: 'Admin revision' }]);
+  await page.reload();
+  page.once('dialog', (dialog) => dialog.accept());
+  await page.getByRole('button', { name: 'Delete', exact: true }).click();
+  expect(await posts(page)).toEqual([]);
+  await expect(page).toHaveURL(/\/blogs$/);
+});
+
+test('mobile guest guard and real single/two/three-column publishing list', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/write');
+  await expect(page).toHaveURL(/\/login$/);
+  await page.getByRole('main').getByRole('link', { name: 'Register', exact: true }).click();
+  await register(page, 'Mobile', 'mobile');
+  for (const title of ['First', 'Second', 'Third']) {
+    await page.getByRole('main').getByRole('link', { name: 'Write', exact: true }).click();
+    await page.getByLabel('Title').fill(title);
+    await page.getByLabel('Content').fill(title + ' content');
+    await page.getByRole('button', { name: 'Save', exact: true }).click();
+    await page.getByRole('link', { name: 'Back to All Posts', exact: true }).click();
+  }
+  const grid = page.getByRole('region', { name: 'Blog posts' });
+  for (const [width, columns] of [[390, 1], [800, 2], [1100, 3]]) {
+    await page.setViewportSize({ width, height: 844 });
+    const count = await grid.evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length);
+    expect(count).toBe(columns);
+  }
+  expect((await posts(page)).length).toBe(3);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.screenshot({ path: 'test-results/blogs-mobile.png', fullPage: true });
+  await page.getByRole('button', { name: 'Toggle navigation' }).click();
+  await page.getByRole('navigation', { name: 'Workspace navigation' }).getByRole('link', { name: 'Write', exact: true }).click();
+  await page.getByLabel('Title').fill('Discard draft');
+  await page.getByRole('link', { name: 'Cancel', exact: true }).click();
+  expect((await posts(page)).length).toBe(3);
+});

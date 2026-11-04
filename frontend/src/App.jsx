@@ -8,6 +8,9 @@ import { ProtectedRoute } from './components/ProtectedRoute.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import LandingPage from './pages/LandingPage.jsx';
+import Home from './pages/Home.jsx';
+import ReadBlog from './pages/ReadBlog.jsx';
+import WriteBlog from './pages/WriteBlog.jsx';
 
 /** Keep an unknown or not-yet-built route usable without fabricating a feature page. */
 function NotFound() {
@@ -56,7 +59,27 @@ export default function App() {
         <Route path="/register" element={
           current ? <Navigate to={homeFor(current)} replace /> : <RegisterPage onSessionChange={refreshSession} />
         } />
-        {['/blogs', '/blog/:id', '/write', '/edit/:id', '/admin', '/users'].map((path) => (
+        <Route path="/blogs" element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        } />
+        <Route path="/blog/:id" element={
+          <ProtectedRoute>
+            <ReadBlog />
+          </ProtectedRoute>
+        } />
+        <Route path="/write" element={
+          <ProtectedRoute>
+            <WriteBlog key="create" />
+          </ProtectedRoute>
+        } />
+        <Route path="/edit/:id" element={
+          <ProtectedRoute>
+            <WriteBlog key={location.pathname} editing />
+          </ProtectedRoute>
+        } />
+        {['/admin', '/users'].map((path) => (
           <Route key={path} path={path} element={
             <ProtectedRoute adminOnly={path === '/admin' || path === '/users'}>
               <NotFound />
