@@ -109,6 +109,15 @@
       "_origin": "ast"
     },
     {
+      "id": "frontend_e2e_blogs_spec_storage_setitem",
+      "label": ".setItem()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/blogs.spec.js",
+      "source_location": "L73",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
       "id": "frontend_e2e_fixtures",
       "label": "fixtures.js",
       "file_type": "code",
@@ -139,7 +148,7 @@
       "label": "prepare()",
       "file_type": "code",
       "source_file": "frontend/e2e/landing.spec.js",
-      "source_location": "L5",
+      "source_location": "L14",
       "_callable": true,
       "_origin": "ast"
     },
@@ -591,6 +600,47 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 10
+    },
+    {
+      "id": "frontend_scripts_preflight",
+      "label": "preflight.js",
+      "file_type": "code",
+      "source_file": "frontend/scripts/preflight.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_scripts_preflight_env",
+      "label": "env",
+      "file_type": "code",
+      "source_file": "frontend/scripts/preflight.js",
+      "source_location": "L6",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_scripts_preflight_errors",
+      "label": "errors",
+      "file_type": "code",
+      "source_file": "frontend/scripts/preflight.js",
+      "source_location": "L10",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_scripts_preflight_records",
+      "label": "records",
+      "file_type": "code",
+      "source_file": "frontend/scripts/preflight.js",
+      "source_location": "L13",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_scripts_preflight_capture",
+      "label": "capture()",
+      "file_type": "code",
+      "source_file": "frontend/scripts/preflight.js",
+      "source_location": "L17",
+      "_callable": true,
+      "_origin": "ast"
     },
     {
       "id": "frontend_src_app",
@@ -1940,7 +1990,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/admin.spec.js",
-      "source_location": "L50",
+      "source_location": "L66",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -1951,7 +2001,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/admin.spec.js",
-      "source_location": "L63",
+      "source_location": "L79",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2031,12 +2081,23 @@
     },
     {
       "source": "frontend_e2e_blogs_spec",
+      "target": "frontend_e2e_blogs_spec_storage_setitem",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/blogs.spec.js",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_e2e_blogs_spec",
       "target": "frontend_e2e_blogs_spec_register",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/blogs.spec.js",
-      "source_location": "L27",
+      "source_location": "L42",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2047,7 +2108,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/blogs.spec.js",
-      "source_location": "L33",
+      "source_location": "L50",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2058,7 +2119,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/blogs.spec.js",
-      "source_location": "L84",
+      "source_location": "L172",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2111,7 +2172,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/landing.spec.js",
-      "source_location": "L5",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2122,7 +2183,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/landing.spec.js",
-      "source_location": "L20",
+      "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2631,6 +2692,68 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/playwright.config.js",
       "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_scripts_preflight",
+      "target": "ref_playwright_test",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/scripts/preflight.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_scripts_preflight",
+      "target": "ref_vite",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/scripts/preflight.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_scripts_preflight",
+      "target": "frontend_scripts_preflight_env",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/scripts/preflight.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_scripts_preflight",
+      "target": "frontend_scripts_preflight_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/scripts/preflight.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_scripts_preflight",
+      "target": "frontend_scripts_preflight_records",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/scripts/preflight.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_scripts_preflight",
+      "target": "frontend_scripts_preflight_capture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/scripts/preflight.js",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -3752,7 +3875,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/admin.test.jsx",
-      "source_location": "L130",
+      "source_location": "L151",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -3763,7 +3886,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/admin.test.jsx",
-      "source_location": "L144",
+      "source_location": "L165",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -9004,10 +9127,10 @@
     }
   ],
   "metadata": {
-    "built_at": "2026-11-04T14:17:57.123308+00:00",
+    "built_at": "2026-11-04T15:04:19.353091+00:00",
     "version": "graph_update-v1",
     "codebase_root": "C:\\artifacts-v2\\T0132PcJVCRTV000404112610144556\\developer",
     "force": true,
-    "files_scanned": 41
+    "files_scanned": 42
   }
 }
