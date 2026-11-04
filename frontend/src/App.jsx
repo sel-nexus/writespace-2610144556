@@ -1,4 +1,4 @@
-/** Compose identity and public discovery; unbuilt destinations retain a neutral local fallback. */
+/** Compose public discovery, identity, publishing and administrator routes. */
 import { useEffect, useState } from 'react';
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { getSession, homeFor } from './utils/auth.js';
@@ -11,6 +11,8 @@ import LandingPage from './pages/LandingPage.jsx';
 import Home from './pages/Home.jsx';
 import ReadBlog from './pages/ReadBlog.jsx';
 import WriteBlog from './pages/WriteBlog.jsx';
+import AdminDashboard from './pages/AdminDashboard.jsx';
+import UserManagement from './pages/UserManagement.jsx';
 
 /** Keep an unknown or not-yet-built route usable without fabricating a feature page. */
 function NotFound() {
@@ -79,13 +81,16 @@ export default function App() {
             <WriteBlog key={location.pathname} editing />
           </ProtectedRoute>
         } />
-        {['/admin', '/users'].map((path) => (
-          <Route key={path} path={path} element={
-            <ProtectedRoute adminOnly={path === '/admin' || path === '/users'}>
-              <NotFound />
-            </ProtectedRoute>
-          } />
-        ))}
+        <Route path="/admin" element={
+          <ProtectedRoute adminOnly>
+            <AdminDashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/users" element={
+          <ProtectedRoute adminOnly>
+            <UserManagement />
+          </ProtectedRoute>
+        } />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
