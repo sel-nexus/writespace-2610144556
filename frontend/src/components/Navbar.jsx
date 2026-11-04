@@ -1,5 +1,5 @@
 /** Provide responsive local workspace navigation and explicit session removal. */
-import { useEffect, useState } from 'react';
+import { startTransition, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { clearSession } from '../utils/auth.js';
@@ -21,8 +21,12 @@ export function Navbar({ session, onSessionChange }) {
   function logout() {
     const result = clearSession();
     if (!result.ok) { setError(result.message); return; }
-    onSessionChange();
-    navigate('/');
+    // Keep identity refresh and router transition at the same priority so the
+    // old protected route cannot render and schedule a competing redirect.
+    startTransition(() => {
+      onSessionChange();
+      navigate('/');
+    });
   }
 
   return (

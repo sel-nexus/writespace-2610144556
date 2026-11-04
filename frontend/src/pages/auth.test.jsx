@@ -2,7 +2,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, useLocation } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, useLocation } from 'react-router-dom';
 import App from '../App.jsx';
 import { setSession, getSession, ADMIN_SESSION } from '../utils/auth.js';
 import { getUsers } from '../utils/storage.js';
@@ -36,6 +36,17 @@ async function logout(user, name = 'Mira') {
 }
 
 describe('auth pages and navigation', () => {
+  it('browser transition logout ends at public home without a competing guard redirect', async () => {
+    const user = userEvent.setup();
+    setSession(ADMIN_SESSION);
+    window.history.replaceState({}, '', '/admin');
+    render(<BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}><App /><Location /></BrowserRouter>);
+    await logout(user, 'Admin');
+    expect(getSession()).toBeNull();
+    expect(screen.getByLabelText('Location')).toHaveTextContent(/^\/$/);
+    expect(screen.getByRole('link', { name: 'Get Started Free' })).toBeInTheDocument();
+    window.history.replaceState({}, '', '/');
+  });
   it.each(['/login', '/register', '/unknown'])('never invokes storage writes on render at %s', (path) => {
     const write = vi.spyOn(Storage.prototype, 'setItem');
     const remove = vi.spyOn(Storage.prototype, 'removeItem');
@@ -108,7 +119,8 @@ describe('auth pages and navigation', () => {
     view.unmount(); mount('/blogs'); expect(screen.getByRole('button', { name: 'Mira profile' })).toBeInTheDocument();
     localStorage.setItem('writespace_posts', '[]'); localStorage.setItem('unrelated', 'keep'); await logout(user);
     expect(getSession()).toBeNull(); expect(getUsers()).toHaveLength(1); expect(localStorage.getItem('writespace_posts')).toBe('[]'); expect(localStorage.getItem('unrelated')).toBe('keep');
-    await user.click(screen.getByRole('link', { name: 'Login' })); await user.type(screen.getByLabelText('Username'), 'mira');
+    expect(screen.getByLabelText('Location')).toHaveTextContent(/^\/$/);
+    await user.click(within(screen.getByRole('navigation', { name: 'Public navigation' })).getByRole('link', { name: 'Login' })); await user.type(screen.getByLabelText('Username'), 'mira');
     await user.type(screen.getByLabelText('Password'), 'demo'); await user.click(screen.getByRole('button', { name: 'Login' }));
     expect(getSession().username).toBe('mira'); expect(screen.queryByRole('link', { name: 'Users' })).not.toBeInTheDocument();
   });
