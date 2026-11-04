@@ -21,6 +21,94 @@ async function posts(page) {
   return page.evaluate(() => JSON.parse(localStorage.getItem('writespace_posts')));
 }
 
+test('authenticated missing post offers a working Back to All Posts link', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('writespace_session', JSON.stringify({
+      userId: 'writer', username: 'mira', displayName: 'Mira', role: 'user',
+    }));
+  });
+  await page.goto('/blog/missing-post');
+  await expect(page).toHaveURL(/\/blog\/missing-post$/);
+  await expect(page.getByRole('button', { name: 'Mira profile', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Post not found', exact: true })).toBeVisible();
+  await page.getByRole('link', { name: 'Back to All Posts', exact: true }).click();
+  await expect(page).toHaveURL(/\/blogs$/);
+  await expect(page.getByText('No blogs yet. Be the first to write one!', { exact: true })).toBeVisible();
+});
+
+for (const mode of ['write', 'edit']) {
+  test(`${mode} save failure retains text, route and prior posts until an explicit successful retry`, async ({ page }) => {
+    await page.goto('/register');
+    await register(page, 'Mira', 'mira');
+    for (const title of ['Prior notes', 'Keep this post']) {
+      await page.getByRole('main').getByRole('link', { name: 'Write', exact: true }).click();
+      await page.getByLabel('Title', { exact: true }).fill(title);
+      await page.getByLabel('Content', { exact: true }).fill(title + ' content');
+      await page.getByRole('button', { name: 'Save', exact: true }).click();
+      await page.getByRole('link', { name: 'Back to All Posts', exact: true }).click();
+    }
+    const prior = await posts(page);
+    const rawBefore = await page.evaluate(() => localStorage.getItem('writespace_posts'));
+    if (mode === 'edit') {
+      await page.getByRole('link', { name: 'Read Prior notes', exact: true }).click();
+      await page.getByRole('link', { name: 'Edit', exact: true }).click();
+      await expect(page.getByLabel('Title', { exact: true })).toHaveValue('Prior notes');
+      await expect(page.getByLabel('Content', { exact: true })).toHaveValue('Prior notes content');
+    } else {
+      await page.getByRole('main').getByRole('link', { name: 'Write', exact: true }).click();
+    }
+    const formRoute = page.url();
+    await expect(page).toHaveURL(mode === 'edit' ? new RegExp('/edit/' + prior[0].id + '$') : /\/write$/);
+    const title = 'Retained ' + mode + ' draft';
+    const content = '  Keep every line\nDraft text awaiting retry  ';
+    await page.getByLabel('Title', { exact: true }).fill(title);
+    await page.getByLabel('Content', { exact: true }).fill(content);
+    // Inject only the requested posts-write failure; reads and other storage stay real.
+    await page.evaluate(() => {
+      const original = Storage.prototype.setItem;
+      window.restorePostsStorage = () => {
+        Storage.prototype.setItem = original;
+        delete window.restorePostsStorage;
+      };
+      Storage.prototype.setItem = function (key, value) {
+        if (this === localStorage && key === 'writespace_posts') {
+          throw new DOMException('Test posts quota exceeded', 'QuotaExceededError');
+        }
+        return original.call(this, key, value);
+      };
+    });
+    try {
+      await page.getByRole('button', { name: 'Save', exact: true }).click();
+      await expect(page.getByRole('alert')).toHaveText('Your browser could not save this change. Enable local storage or free space, then try again.');
+      await expect(page.getByLabel('Title', { exact: true })).toHaveValue(title);
+      await expect(page.getByLabel('Content', { exact: true })).toHaveValue(content);
+      await expect(page).toHaveURL(formRoute);
+      expect(await page.evaluate(() => localStorage.getItem('writespace_posts'))).toBe(rawBefore);
+      expect(await posts(page)).toEqual(prior);
+    } finally {
+      await page.evaluate(() => window.restorePostsStorage());
+    }
+    // Recovery alone must not save or navigate; retry the retained form explicitly.
+    await expect(page).toHaveURL(formRoute);
+    expect(await page.evaluate(() => localStorage.getItem('writespace_posts'))).toBe(rawBefore);
+    await expect(page.getByLabel('Title', { exact: true })).toHaveValue(title);
+    await expect(page.getByLabel('Content', { exact: true })).toHaveValue(content);
+    await page.getByRole('button', { name: 'Save', exact: true }).click();
+    const saved = await posts(page);
+    const changed = mode === 'edit' ? saved[0] : saved[2];
+    await expect(page).toHaveURL(new RegExp('/blog/' + changed.id + '$'));
+    await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
+    expect(await page.locator('article p').first().textContent()).toBe(content);
+    if (mode === 'edit') {
+      expect(saved).toEqual([{ ...prior[0], title, content }, prior[1]]);
+    } else {
+      expect(saved).toHaveLength(3);
+      expect(saved.slice(0, 2)).toEqual(prior);
+      expect(changed).toMatchObject({ title, content, authorId: prior[0].authorId, authorName: 'Mira' });
+    }
+  });
+}
+
 test('register, create, reload, read, edit, cancel and delete via real controls', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Get Started', exact: true }).click();

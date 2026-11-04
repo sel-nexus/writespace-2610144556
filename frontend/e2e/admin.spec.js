@@ -38,6 +38,22 @@ test('create both roles, publish as created writer, oversee as created admin, pr
   await expect(pending).toContainText('—');
   await expect(pending).toContainText('Metric pending definition');
   expect(await stored(page, 'writespace_users')).toBeNull();
+  const postsBeforeWriting = await stored(page, 'writespace_posts');
+  const sessionBeforeWriting = await stored(page, 'writespace_session');
+  await page.getByRole('link', { name: 'Write New Post', exact: true }).click();
+  await expect(page).toHaveURL(/\/write$/);
+  await expect(page.getByRole('heading', { name: 'Write a Blog', exact: true })).toBeVisible();
+  await page.getByLabel('Title').fill('Cancelled admin draft');
+  await page.getByLabel('Content').fill('This draft must not be persisted.');
+  await page.getByRole('link', { name: 'Cancel', exact: true }).click();
+  await expect(page).toHaveURL(/\/blogs$/);
+  expect(await stored(page, 'writespace_posts')).toEqual(postsBeforeWriting);
+  expect(await stored(page, 'writespace_users')).toBeNull();
+  expect(await stored(page, 'writespace_session')).toEqual(sessionBeforeWriting);
+  await page.getByRole('link', { name: 'WriteSpace.', exact: true }).click();
+  await page.getByRole('link', { name: 'Go to Dashboard', exact: true }).click();
+  await expect(page).toHaveURL(/\/admin$/);
+  await expect(page.getByText('No posts yet.', { exact: true })).toBeVisible();
   await page.getByRole('link', { name: 'Manage Users', exact: true }).click();
   const table = page.getByRole('table', { name: 'User accounts' });
   const permanent = table.getByRole('button', { name: 'Delete admin', exact: true });
@@ -100,6 +116,37 @@ test('create both roles, publish as created writer, oversee as created admin, pr
   await expect(table.getByRole('button', { name: 'Delete mira', exact: true })).toHaveCount(0);
   await expect(permanent).toBeDisabled();
   await expect(self).toBeDisabled();
+});
+
+test('dashboard delimiter-id links open the intended detail and edit form without changing stored posts', async ({ page }) => {
+  await page.goto('/login');
+  await login(page, 'admin', 'admin');
+  const intended = {
+    id: 'one/two?draft#notes', title: 'Delimiter notes', content: 'Intended post content',
+    authorId: 'writer', authorName: 'Writer', createdAt: '2026-01-22T12:00:00Z',
+  };
+  const other = { ...intended, id: 'one', title: 'Other notes', content: 'Other post content' };
+  await page.evaluate((posts) => localStorage.setItem('writespace_posts', JSON.stringify(posts)), [other, intended]);
+  await page.reload();
+  const recent = page.getByRole('region', { name: 'Recent posts' });
+  const detail = recent.getByRole('link', { name: intended.title, exact: true });
+  const detailPath = '/blog/' + encodeURIComponent(intended.id);
+  await expect(detail).toHaveAttribute('href', detailPath);
+  await detail.click();
+  await expect(page).toHaveURL((url) => url.pathname === detailPath && url.search === '' && url.hash === '');
+  await expect(page.getByRole('heading', { level: 1, name: intended.title, exact: true })).toBeVisible();
+  await expect(page.getByText(intended.content, { exact: true })).toBeVisible();
+  await page.getByRole('link', { name: 'WriteSpace.', exact: true }).click();
+  await page.getByRole('link', { name: 'Go to Dashboard', exact: true }).click();
+  const edit = recent.getByRole('link', { name: 'Edit ' + intended.title, exact: true });
+  const editPath = '/edit/' + encodeURIComponent(intended.id);
+  await expect(edit).toHaveAttribute('href', editPath);
+  await edit.click();
+  await expect(page).toHaveURL((url) => url.pathname === editPath && url.search === '' && url.hash === '');
+  await expect(page.getByRole('heading', { name: 'Edit Blog', exact: true })).toBeVisible();
+  await expect(page.getByLabel('Title')).toHaveValue(intended.title);
+  await expect(page.getByLabel('Content')).toHaveValue(intended.content);
+  expect(await stored(page, 'writespace_posts')).toEqual([other, intended]);
 });
 
 test('table at 640 and above, mobile cards below 640 preserve profile fields and cancelled deletion', async ({ page }) => {

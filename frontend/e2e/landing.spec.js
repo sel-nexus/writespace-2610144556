@@ -1,6 +1,15 @@
 /** Author real discovery journeys; the shared fixture captures errors before initial navigation. */
 import { test, expect } from './fixtures.js';
 
+test('unknown address offers a working Back to Home fallback', async ({ page }) => {
+  await page.goto('/unknown-address');
+  await expect(page).toHaveURL(/\/unknown-address$/);
+  await expect(page.getByRole('heading', { name: 'Page not found', exact: true })).toBeVisible();
+  await page.getByRole('link', { name: 'Back to Home', exact: true }).click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.getByRole('link', { name: 'Get Started Free', exact: true })).toBeVisible();
+});
+
 /** Prepare explicitly test-owned local records before navigation, never application seed data. */
 async function prepare(page, session = null) {
   await page.addInitScript(({ identity }) => {
@@ -71,11 +80,18 @@ test('mobile empty discovery retains readable copy and functional reading/regist
 });
 
 test('unreadable local data remains untouched while guest entry stays available', async ({ page }) => {
-  await page.addInitScript(() => localStorage.setItem('writespace_posts', '{broken'));
+  await page.addInitScript(() => {
+    if (localStorage.getItem('landing_corruption_prepared')) return;
+    localStorage.setItem('writespace_posts', '{broken');
+    localStorage.setItem('landing_corruption_prepared', 'true');
+  });
   await page.goto('/');
   await expect(page.getByText('No posts yet — check back soon!')).toBeVisible();
   await expect(page.getByRole('status')).toContainText('Nothing was changed.');
+  expect(await page.evaluate(() => localStorage.getItem('writespace_posts'))).toBe('{broken');
   await page.reload();
+  await expect(page.getByText('No posts yet — check back soon!')).toBeVisible();
+  await expect(page.getByRole('status')).toContainText('Nothing was changed.');
   expect(await page.evaluate(() => localStorage.getItem('writespace_posts'))).toBe('{broken');
   await page.getByRole('link', { name: 'Get Started Free' }).click();
   await expect(page).toHaveURL(/\/register$/);

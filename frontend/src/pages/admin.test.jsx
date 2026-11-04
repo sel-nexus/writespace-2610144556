@@ -89,6 +89,27 @@ describe('admin routes and dashboard', () => {
     await user.click(screen.getByRole('link', { name: 'Edit one' }));
     expect(screen.getByLabelText('Location')).toHaveTextContent('/edit/one'); expect(screen.getByLabelText('Title')).toHaveValue('one');
   });
+  it.each(['detail', 'edit'])('opens the intended %s from dashboard for a delimiter-containing post id', async (destination) => {
+    const intended = { ...post('one/two?draft#notes'), title: 'Delimiter notes', content: 'Intended post content' };
+    setSession(ADMIN_SESSION); savePosts([post('one'), intended]); mount('/admin');
+    const user = userEvent.setup();
+    const link = within(screen.getByRole('region', { name: 'Recent posts' })).getByRole('link', {
+      name: destination === 'detail' ? intended.title : 'Edit ' + intended.title, exact: true,
+    });
+    const path = (destination === 'detail' ? '/blog/' : '/edit/') + encodeURIComponent(intended.id);
+    expect(link).toHaveAttribute('href', path);
+    await user.click(link);
+    expect(screen.getByLabelText('Location').textContent).toBe(path);
+    if (destination === 'detail') {
+      expect(screen.getByRole('heading', { level: 1, name: intended.title })).toBeVisible();
+      expect(screen.getByText(intended.content, { exact: true })).toBeVisible();
+    } else {
+      expect(screen.getByRole('heading', { name: 'Edit Blog' })).toBeVisible();
+      expect(screen.getByLabelText('Title')).toHaveValue(intended.title);
+      expect(screen.getByLabelText('Content')).toHaveValue(intended.content);
+    }
+    expect(readPosts().value).toEqual([post('one'), intended]);
+  });
   it('cancels then confirms deletion preserving fresh concurrent posts and refreshing metrics', async () => {
     setSession(ADMIN_SESSION); savePosts([post('one')]); mount('/admin'); const user = userEvent.setup();
     const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false); const write = vi.spyOn(Storage.prototype, 'setItem');

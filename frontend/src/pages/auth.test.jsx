@@ -158,7 +158,8 @@ describe('auth pages and navigation', () => {
     await user.click(screen.getByRole('button', { name: 'Toggle navigation' })); expect(screen.getByRole('button', { name: 'Toggle navigation' })).toHaveAttribute('aria-expanded', 'true');
     await user.click(screen.getByRole('button', { name: 'Admin profile' })); expect(screen.getByRole('button', { name: 'Logout' })).toBeInTheDocument();
     await user.keyboard('{Escape}'); expect(screen.queryByRole('button', { name: 'Logout' })).not.toBeInTheDocument();
-    localStorage.removeItem('writespace_session'); await user.click(screen.getByRole('link', { name: 'Write' }));
+    localStorage.removeItem('writespace_session');
+    await user.click(within(screen.getByRole('navigation', { name: 'Workspace navigation' })).getByRole('link', { name: 'Write' }));
     expect(screen.getByLabelText('Location')).toHaveTextContent('/login'); expect(screen.getByRole('navigation', { name: 'Public navigation' })).toBeInTheDocument();
   });
   it('renders unknown routes safely and both static avatar branches', () => {

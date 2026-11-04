@@ -63,14 +63,14 @@ export default function AdminDashboard() {
               <li key={post.id} className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="min-w-0">
                   <h3 className="break-words font-semibold">
-                    <Link to={'/blog/' + post.id} className="rounded hover:underline focus-visible:ring-2 focus-visible:ring-indigo-500">
+                    <Link to={'/blog/' + encodeURIComponent(post.id)} className="rounded hover:underline focus-visible:ring-2 focus-visible:ring-indigo-500">
                       {post.title}
                     </Link>
                   </h3>
                   <p className="mt-1 text-sm text-slate-600">{post.authorName}</p>
                 </div>
                 <div className="flex shrink-0 gap-2">
-                  <Link to={'/edit/' + post.id} aria-label={'Edit ' + post.title}
+                  <Link to={'/edit/' + encodeURIComponent(post.id)} aria-label={'Edit ' + post.title}
                     className={linkStyle + ' border border-indigo-200 text-indigo-700 hover:bg-indigo-50'}>
                     Edit
                   </Link>
