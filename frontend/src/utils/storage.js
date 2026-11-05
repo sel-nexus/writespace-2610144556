@@ -1,6 +1,7 @@
 /** Validate browser-local demo collections without seeding or repairing data. */
 export const POSTS_KEY = 'writespace_posts';
 export const USERS_KEY = 'writespace_users';
+export const THEME_KEY = 'writespace_theme';
 const SAVE_MESSAGE = 'Your browser could not save this change. Enable local storage or free space, then try again.';
 
 /** Require a non-empty primitive string at an external-data boundary.
@@ -121,4 +122,30 @@ export function savePosts(posts) {
  */
 export function saveUsers(users) {
   return saveCollection(USERS_KEY, users, isUser);
+}
+
+/** Read an exact raw preference, defaulting to light without repairing browser data.
+ * Returns: The saved appearance or light when storage is missing, invalid or unavailable.
+ */
+export function getTheme() {
+  try {
+    const theme = localStorage.getItem(THEME_KEY);
+    return theme === 'dark' || theme === 'light' ? theme : 'light';
+  } catch {
+    return 'light';
+  }
+}
+
+/** Persist only an explicitly selected appearance, independently of demo domain data.
+ * Args: theme is an exact light or dark preference, never coerced or serialized.
+ * Returns: Whether best-effort persistence succeeded; failures never block appearance.
+ */
+export function saveTheme(theme) {
+  if (theme !== 'light' && theme !== 'dark') return false;
+  try {
+    localStorage.setItem(THEME_KEY, theme);
+    return true;
+  } catch {
+    return false;
+  }
 }
