@@ -42,18 +42,31 @@ export default function UserManagement() {
   return (
     <main id="main" className="mx-auto max-w-6xl space-y-8 px-4 py-10 sm:px-6">
       <header>
-        <Link to="/admin" className="rounded text-indigo-700 underline focus-visible:ring-2 focus-visible:ring-indigo-500">
+        <Link to="/admin" className={
+          "rounded text-indigo-700 dark:text-indigo-300 underline focus-visible:ring-2 " +
+          "focus-visible:ring-indigo-500 dark:focus-visible:ring-indigo-400"
+        }>
           Back to Dashboard
         </Link>
         <h1 className="mt-4 font-display text-4xl font-bold">User Management</h1>
-        <p className="mt-3 text-slate-600">Create and manage the accounts in this browser.</p>
+        <p className="mt-3 text-slate-600 dark:text-slate-300">Create and manage the accounts in this browser.</p>
       </header>
       {!users.ok && (
-        <p role="status" className="rounded-xl bg-amber-50 p-4 text-amber-900">{users.message}</p>
+        <p role="status" className={
+          "rounded-xl bg-amber-50 dark:bg-amber-950 p-4 text-amber-900 dark:text-amber-200"
+        }>
+          {users.message}
+        </p>
       )}
-      <section aria-label="Create User" className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section aria-label="Create User" className={
+        "rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 " +
+        "shadow-sm"
+      }>
         <h2 className="font-display text-2xl font-bold">Create User</h2>
-        <p className="my-4 rounded-xl bg-amber-50 p-4 text-sm text-amber-900">
+        <p className={
+          "my-4 rounded-xl bg-amber-50 dark:bg-amber-950 p-4 text-sm text-amber-900 " +
+          "dark:text-amber-200"
+        }>
           Demo only — do not use real passwords. Passwords are stored as plaintext in this browser.
           These client-side checks are not secure authentication.
         </p>
@@ -67,11 +80,13 @@ export default function UserManagement() {
                 onChange={(event) => setForm({ ...form, [field]: event.target.value })}
                 aria-invalid={Boolean(errors[field])} aria-describedby={errors[field] ? field + '-error' : undefined}
                 className={
-                  'w-full rounded-xl border border-slate-300 px-4 py-3 focus-visible:outline-none ' +
-                  'focus-visible:ring-2 focus-visible:ring-indigo-500'
+                  "w-full rounded-xl border border-slate-300 bg-white text-slate-900 dark:bg-slate-900 " +
+                  "dark:text-slate-100 dark:border-slate-600 px-4 py-3 focus-visible:outline-none " +
+                  'focus-visible:ring-2 focus-visible:ring-indigo-500 dark:focus-visible:ring-indigo-400 ' +
+                  'focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900'
                 } />
               {errors[field] && (
-                <p id={field + '-error'} role="alert" className="mt-2 text-sm text-red-700">{errors[field]}</p>
+                <p id={field + '-error'} role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">{errors[field]}</p>
               )}
             </div>
           ))}
@@ -81,43 +96,51 @@ export default function UserManagement() {
               onChange={(event) => setForm({ ...form, role: event.target.value })}
               aria-invalid={Boolean(errors.role)} aria-describedby={errors.role ? 'role-error' : undefined}
               className={
-                'w-full rounded-xl border border-slate-300 bg-white px-4 py-3 focus-visible:outline-none ' +
-                'focus-visible:ring-2 focus-visible:ring-indigo-500'
+                "w-full rounded-xl border border-slate-300 bg-white text-slate-900 dark:bg-slate-900 " +
+                "dark:text-slate-100 dark:border-slate-600 px-4 py-3 focus-visible:outline-none " +
+                'focus-visible:ring-2 focus-visible:ring-indigo-500 dark:focus-visible:ring-indigo-400 ' +
+                'focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900'
               }>
               <option value="">Select a role</option>
               <option value="admin">Admin</option>
               <option value="user">user</option>
             </select>
             {errors.role && (
-              <p id="role-error" role="alert" className="mt-2 text-sm text-red-700">{errors.role}</p>
+              <p id="role-error" role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">{errors.role}</p>
             )}
           </div>
           <button type="submit" className={
-            'rounded-xl bg-indigo-600 px-4 py-3 font-semibold text-white hover:bg-indigo-700 sm:col-span-2 ' +
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2'
+            "rounded-xl bg-indigo-600 dark:bg-indigo-600 px-4 py-3 font-semibold text-white " +
+            "hover:bg-indigo-700 dark:hover:bg-indigo-700 sm:col-span-2 " +
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 " +
+            "dark:focus-visible:ring-indigo-400 focus-visible:ring-offset-2 " +
+            "dark:focus-visible:ring-offset-slate-800"
           }>
             Create User
           </button>
         </form>
       </section>
       {error && (
-        <p role="alert" className="rounded-xl bg-red-50 p-4 text-red-700">{error}</p>
+        <p role="alert" className="rounded-xl bg-red-50 dark:bg-red-950 p-4 text-red-700 dark:text-red-300">{error}</p>
       )}
       {status && (
-        <p role="status" aria-live="polite" className="text-indigo-700">{status}</p>
+        <p role="status" aria-live="polite" className="text-indigo-700 dark:text-indigo-300">{status}</p>
       )}
       <section aria-label="Accounts" className="space-y-4">
         <h2 className="font-display text-2xl font-bold">Accounts</h2>
-        <div className="hidden overflow-x-auto rounded-2xl border border-slate-200 bg-white sm:block">
+        <div className={
+          "hidden overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-700 bg-white " +
+          "dark:bg-slate-800 sm:block"
+        }>
           <table aria-label="User accounts" className="w-full text-left">
-            <thead className="bg-slate-100 text-sm text-slate-600">
+            <thead className="bg-slate-100 dark:bg-slate-900 text-sm text-slate-600 dark:text-slate-300">
               <tr>
                 {['Display Name', 'Username', 'Role', 'Created', 'Actions'].map((label) => (
                   <th key={label} scope="col" className="px-5 py-3">{label}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
               {profiles.map((user) => (
                 <UserRow key={user.id} user={user} currentId={session?.userId} onDelete={remove} />
               ))}

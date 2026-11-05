@@ -4,8 +4,10 @@ import { Avatar } from './Avatar.jsx';
 import { isDefaultAdmin } from '../utils/users.js';
 
 const badges = {
-  admin: 'bg-violet-100 text-violet-700 ring-violet-300',
-  user: 'bg-indigo-100 text-indigo-700 ring-indigo-300',
+  admin: "bg-violet-100 dark:bg-violet-950 text-violet-700 dark:text-violet-300 ring-violet-300 " +
+          "dark:ring-violet-700",
+  user: "bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 ring-indigo-300 " +
+          "dark:ring-indigo-700",
 };
 
 /** Render a table row or mobile card with immutable and current-account safeguards.
@@ -36,19 +38,28 @@ export function UserRow({ user, currentId, onDelete, card = false }) {
   const remove = (
     <button type="button" disabled={builtIn || self} title={title} aria-label={'Delete ' + user.username}
       onClick={() => onDelete(user.id)} className={
-        'rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-100 ' +
-        'disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 disabled:text-slate-500 ' +
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2'
+        "rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950 px-4 py-2 " +
+        "text-sm font-medium text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900 " +
+        "" +
+        "disabled:cursor-not-allowed disabled:border-slate-200 dark:disabled:border-slate-700 " +
+        "disabled:bg-slate-100 dark:disabled:bg-slate-900 disabled:text-slate-500 " +
+        "dark:disabled:text-slate-400 " +
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 " +
+        "dark:focus-visible:ring-red-400 focus-visible:ring-offset-2 " +
+        "dark:focus-visible:ring-offset-slate-800"
       }>
       Delete
     </button>
   );
   if (card) return (
-    <article aria-label={'Account ' + user.username} className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5">
+    <article aria-label={'Account ' + user.username} className={
+      "space-y-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white " +
+      "dark:bg-slate-800 p-5"
+    }>
       {identity}
       <dl className="space-y-3 text-sm">
         <div>
-          <dt className="text-slate-600">Username</dt>
+          <dt className="text-slate-600 dark:text-slate-300">Username</dt>
           <dd className="break-all">{user.username}</dd>
         </div>
         <div>
@@ -56,7 +67,7 @@ export function UserRow({ user, currentId, onDelete, card = false }) {
           <dd>{role}</dd>
         </div>
         <div>
-          <dt className="text-slate-600">Created</dt>
+          <dt className="text-slate-600 dark:text-slate-300">Created</dt>
           <dd>{created}</dd>
         </div>
       </dl>
@@ -68,7 +79,7 @@ export function UserRow({ user, currentId, onDelete, card = false }) {
       <td className="px-5 py-4">{identity}</td>
       <td className="break-all px-5 py-4">{user.username}</td>
       <td className="px-5 py-4">{role}</td>
-      <td className="px-5 py-4 text-sm text-slate-600">{created}</td>
+      <td className="px-5 py-4 text-sm text-slate-600 dark:text-slate-300">{created}</td>
       <td className="px-5 py-4">{remove}</td>
     </tr>
   );
