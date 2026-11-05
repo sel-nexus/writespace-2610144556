@@ -6,7 +6,7 @@ A browser-local plain-text publishing demo built with React 18, Vite 5, React Ro
 
 **Do not use real passwords or sensitive content.** Passwords are plaintext in localStorage. The built-in administrator login is `admin` / `admin`. Client-side role and ownership checks are usability safeguards, not trusted authentication or authorization. Browser owners can inspect or change all data. There is no backend, API, database, encryption, shared publication, cross-device sync or central backup.
 
-Data uses exactly `writespace_posts`, `writespace_users`, and `writespace_session`. Clearing browser storage loses the only copy. Whole-array writes are last-write-wins across tabs. Failed writes show recovery guidance and do not claim successful persistence. Registration can save an account before a session write fails; follow the inline guidance to log in, rather than registering again.
+Domain data uses `writespace_posts`, `writespace_users`, and `writespace_session`. Appearance independently uses scalar `writespace_theme` (`light` or `dark`), defaulting to light for missing, invalid or inaccessible values. The shared Dark mode toggle is keyboard-operable; failed preference writes retain the active appearance. Logout preserves theme. The live editor counter is informational UTF-16 string length, imposes no maximum and is never stored with posts. Clearing browser storage loses the only copy. Whole-array writes are last-write-wins across tabs. Failed writes show recovery guidance and do not claim successful persistence. Registration can save an account before a session write fails; follow the inline guidance to log in, rather than registering again.
 
 ## Run locally
 
@@ -47,9 +47,9 @@ node node_modules/@playwright/test/cli.js install chromium
 npm run test:e2e -- --workers=1
 ```
 
-Vitest plus Testing Library: **450 tests passed in 8 files**. Each feature slice was verified before committing. Independent read-only test review passed in round 2, score **1.0**, zero high failures.
+Current brownfield verification: baseline **451 tests passed in 8 files**; final Vitest/Testing Library suite **570 tests passed in 13 files**. Four feature slices were independently verified and committed. Independent read-only test review passed in round 2, score **1.0**, zero high failures. Production Vite build passed.
 
-**E2E is infrastructure-blocked, not passed.** Playwright 1.49.1 test/discovery runner hung without output on two 300-second suite attempts, a 60-second listing attempt and a 90-second guest-local cache retry. The human approved delivery with this warning. The four reviewed journey specs remain in `frontend/e2e/` for subsequent execution. The standalone Playwright preflight succeeded and captured desktop/mobile accessibility trees, styles, HTML and screenshots; that is not a substitute for E2E journeys. API/database/backend integration tests do not apply to this static application.
+**E2E is infrastructure-blocked, not passed.** In this run Playwright 1.49.1 hung without stdout/stderr on a 600-second full-suite attempt, a 300-second guest-local copy retry and a 180-second targeted retry. The human approved delivery with this warning. Eight reviewed journey specs remain in `frontend/e2e/`. Standalone Chromium preflight succeeded after installing its missing browser binary and restarting preview: five representative desktop/mobile public, login-error, editor and Admin states were captured in `frontend/preflight/`. This is not a substitute for journey tests. API/database/backend integration tests do not apply. AWS deployment and Docker image execution were not verified by this Developer run.
 
 **Dependency audit warning:** npm reported 11 advisories (2 critical, 7 high, 2 moderate) in the pinned toolchain/runtime dependencies. Versions retain the prescribed Vite 5/Router 6 stack. Do not expose Vite or Vitest development/UI servers publicly. Review dependency upgrades before broader distribution; this run did not claim the advisories resolved.
 

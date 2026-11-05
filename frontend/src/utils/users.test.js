@@ -5,6 +5,12 @@ import { ADMIN_SESSION, SESSION_KEY, setSession, getSession } from './auth.js';
 import { USERS_KEY, POSTS_KEY, readUsers, saveUsers } from './storage.js';
 
 const input = { displayName: ' Mira ', username: ' Mira ', password: ' demo ', role: 'user' };
+const largeInput = {
+  displayName: `  ${'Display Name '.repeat(400)}Writer  `,
+  username: `  ${'LongUsername'.repeat(200)}Writer  `,
+  password: `  ${'secret-Password!'.repeat(600)}  `,
+  role: 'user',
+};
 /** Build a complete stored record for fresh-read tests. */
 function account(id = 'one', overrides = {}) {
   return { id, displayName: id, username: id, password: 'demo', role: 'user',
@@ -13,6 +19,23 @@ function account(id = 'one', overrides = {}) {
 beforeEach(() => setSession(ADMIN_SESSION));
 
 describe('account validation and creation', () => {
+  it.each(['user', 'admin'])('preserves exact large account fields and the current Admin session when creating role %s', (role) => {
+    saveUsers([account()]);
+    const sessionBefore = localStorage.getItem(SESSION_KEY);
+    const result = createUser({ ...largeInput, role });
+    expect(result.ok).toBe(true);
+    const expectedUser = { id: result.user.id, createdAt: result.user.createdAt, role,
+      displayName: largeInput.displayName.trim(), username: largeInput.username.trim(), password: largeInput.password };
+    expect(result.user).toEqual(expectedUser);
+    expect(expectedUser.id).toMatch(/^[0-9a-f-]{36}$/);
+    expect(Number.isNaN(Date.parse(expectedUser.createdAt))).toBe(false);
+    expect(JSON.parse(localStorage.getItem(USERS_KEY))).toEqual([account(), expectedUser]);
+    expect(readUsers().value).toEqual([account(), expectedUser]);
+    expect(localStorage.getItem(SESSION_KEY)).toBe(sessionBefore);
+    expect(JSON.parse(localStorage.getItem(SESSION_KEY))).toEqual(ADMIN_SESSION);
+    expect(getSession()).not.toHaveProperty('password');
+    expect(localStorage.getItem(SESSION_KEY)).not.toContain(largeInput.password);
+  });
   it.each(['user', 'admin'])('persists UUID/time and selected %s without switching session or touching posts', (role) => {
     const before = Date.now(); const result = createUser({ ...input, role, id: 'forged', createdAt: 'forged' });
     expect(result.ok).toBe(true);
@@ -116,6 +139,22 @@ describe('confirmed account deletion', () => {
 });
 
 describe('storage failures', () => {
+  it('leaves prior accounts and Admin session unchanged on a large create write failure and gives safe recovery guidance', () => {
+    saveUsers([account()]);
+    const usersBefore = localStorage.getItem(USERS_KEY);
+    const sessionBefore = localStorage.getItem(SESSION_KEY);
+    const original = Storage.prototype.setItem;
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(function(key, value) {
+      if (key === USERS_KEY && value.includes(largeInput.password)) throw new DOMException(largeInput.password, 'QuotaExceededError');
+      return original.call(this, key, value);
+    });
+    const result = createUser(largeInput);
+    expect(result).toEqual({ ok: false, error: 'quota', message: 'Your browser could not save this change. Enable local storage or free space, then try again.' });
+    expect(JSON.stringify(result)).not.toContain(largeInput.password);
+    expect(localStorage.getItem(USERS_KEY)).toBe(usersBefore);
+    expect(localStorage.getItem(SESSION_KEY)).toBe(sessionBefore);
+    expect(getSession()).toEqual(ADMIN_SESSION);
+  });
   for (const operation of ['create', 'delete']) {
     it.each(['{', '{}', '[null]'])('does not replace corrupt storage on ' + operation + ': %s', (raw) => {
       localStorage.setItem(USERS_KEY, raw); const write = vi.spyOn(Storage.prototype, 'setItem');

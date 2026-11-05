@@ -4,8 +4,87 @@ import { login, register, getSession, setSession, clearSession, homeFor, isSessi
 import { getUsers, saveUsers } from './storage.js';
 const input = { displayName: ' Mira ', username: ' Mira ', password: ' demo ', confirmation: ' demo ' };
 const session = { userId: 'u', username: 'mira', displayName: 'Mira', role: 'user' };
+const largeInput = {
+  displayName: `  ${'Display Name '.repeat(400)}Writer  `,
+  username: `  ${'LongUsername'.repeat(200)}Writer  `,
+  password: `  ${'secret-Password!'.repeat(600)}  `,
+};
+largeInput.confirmation = largeInput.password;
 
 describe('local identity', () => {
+  it('round-trips large account fields through registration, logout and login without truncation or session credentials', () => {
+    const result = register(largeInput);
+    expect(result).toMatchObject({ ok: true, destination: '/blogs' });
+    const users = JSON.parse(localStorage.getItem('writespace_users'));
+    expect(users).toHaveLength(1);
+    const expectedUser = {
+      id: result.session.userId, createdAt: users[0].createdAt, role: 'user',
+      displayName: largeInput.displayName.trim(), username: largeInput.username.trim(), password: largeInput.password,
+    };
+    expect(users).toEqual([expectedUser]);
+    expect(expectedUser.id).toMatch(/^[0-9a-f-]{36}$/);
+    expect(Number.isNaN(Date.parse(expectedUser.createdAt))).toBe(false);
+    const expectedSession = {
+      userId: expectedUser.id, displayName: expectedUser.displayName, username: expectedUser.username, role: 'user',
+    };
+    expect(result.session).toEqual(expectedSession);
+    expect(JSON.parse(localStorage.getItem('writespace_session'))).toEqual(expectedSession);
+    const durableAccounts = localStorage.getItem('writespace_users');
+    expect(clearSession().ok).toBe(true);
+    expect(localStorage.getItem('writespace_session')).toBeNull();
+    expect(login({ username: largeInput.username.toUpperCase(), password: largeInput.password.trim() }).code).toBe('invalid_credentials');
+    expect(getSession()).toBeNull();
+    expect(login({ username: largeInput.username.toUpperCase(), password: largeInput.password })).toEqual({
+      ok: true, destination: '/blogs', session: expectedSession,
+    });
+    expect(JSON.parse(localStorage.getItem('writespace_session'))).toEqual(expectedSession);
+    expect(localStorage.getItem('writespace_session')).not.toContain(largeInput.password);
+    expect(localStorage.getItem('writespace_users')).toBe(durableAccounts);
+  });
+  it('preserves prior durable accounts and session when a large registration write fails, with safe retry guidance', () => {
+    register(input);
+    const usersBefore = localStorage.getItem('writespace_users');
+    const sessionBefore = localStorage.getItem('writespace_session');
+    const original = Storage.prototype.setItem;
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(function(key, value) {
+      if (key === 'writespace_users' && value.includes(largeInput.password)) throw new DOMException(largeInput.password, 'QuotaExceededError');
+      return original.call(this, key, value);
+    });
+    const result = register(largeInput);
+    expect(result).toEqual({ ok: false, code: 'storage_error', message: 'Your browser could not save this change. Enable local storage or free space, then try again.' });
+    expect(JSON.stringify(result)).not.toContain(largeInput.password);
+    expect(localStorage.getItem('writespace_users')).toBe(usersBefore);
+    expect(localStorage.getItem('writespace_session')).toBe(sessionBefore);
+  });
+  it('retains exact large account data after session write failure and recovers through login rather than re-registration', () => {
+    register(input); clearSession();
+    const priorUsers = getUsers();
+    const original = Storage.prototype.setItem;
+    const write = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(function(key, value) {
+      if (key === 'writespace_session') throw new DOMException(largeInput.password, 'QuotaExceededError');
+      return original.call(this, key, value);
+    });
+    const result = register(largeInput);
+    expect(result).toMatchObject({ ok: false, code: 'storage_error' });
+    expect(result.message).toMatch(/account was saved locally.*Enable browser storage, then go to Login.*Do not register again/);
+    expect(JSON.stringify(result)).not.toContain(largeInput.password);
+    const users = JSON.parse(localStorage.getItem('writespace_users'));
+    expect(users).toHaveLength(2);
+    expect(users[0]).toEqual(priorUsers[0]);
+    expect(users[1]).toEqual({ id: expect.any(String), createdAt: expect.any(String), role: 'user',
+      displayName: largeInput.displayName.trim(), username: largeInput.username.trim(), password: largeInput.password });
+    expect(getSession()).toBeNull();
+    const durableAccounts = localStorage.getItem('writespace_users');
+    expect(register(largeInput).code).toBe('duplicate');
+    expect(localStorage.getItem('writespace_users')).toBe(durableAccounts);
+    write.mockRestore();
+    expect(login(largeInput)).toEqual({ ok: true, destination: '/blogs', session: {
+      userId: users[1].id, displayName: users[1].displayName, username: users[1].username, role: 'user',
+    } });
+    expect(JSON.parse(localStorage.getItem('writespace_session'))).toEqual(getSession());
+    expect(getSession()).not.toHaveProperty('password');
+    expect(localStorage.getItem('writespace_users')).toBe(durableAccounts);
+  });
   it('rejects wrong password for an existing regular account without persisting a session', () => {
     register(input); clearSession();
     expect(login({ username: 'mira', password: 'wrong' }).message).toBe('Invalid username or password.');

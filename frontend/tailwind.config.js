@@ -1,5 +1,6 @@
 /** Keep publication typography and optional floating motion local to the bundle. */
 export default {
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: { extend: {
     fontFamily: { display: ['Georgia', 'serif'], sans: ['Arial', 'sans-serif'] },

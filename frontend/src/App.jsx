@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { getSession, homeFor } from './utils/auth.js';
+import { getTheme, setTheme } from './utils/theme.js';
 import { PublicNavbar } from './components/PublicNavbar.jsx';
 import { Navbar } from './components/Navbar.jsx';
 import { ProtectedRoute } from './components/ProtectedRoute.jsx';
@@ -18,12 +19,12 @@ import UserManagement from './pages/UserManagement.jsx';
 function NotFound() {
   return (
     <main id="main" className="mx-auto max-w-6xl px-6 py-20">
-      <p className="text-xs font-bold uppercase tracking-widest text-slate-500">WriteSpace</p>
+      <p className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">WriteSpace</p>
       <h1 className="mt-4 font-display text-4xl font-bold">Page not found</h1>
-      <p className="mt-4 text-slate-600">This address is not available in this local edition.</p>
+      <p className="mt-4 text-slate-600 dark:text-slate-300">This address is not available in this local edition.</p>
       <Link to="/" className={
         "mt-6 inline-block rounded-lg text-indigo-700 underline focus-visible:outline-none " +
-        "focus-visible:ring-2 focus-visible:ring-indigo-500"
+        "focus-visible:ring-2 focus-visible:ring-indigo-500 dark:text-indigo-300"
         }>
         Back to Home
       </Link>
@@ -34,6 +35,19 @@ function NotFound() {
 /** Refresh navigation identity after auth callbacks and each router location change. */
 export default function App() {
   const [session, setSession] = useState(getSession);
+  const [theme, updateTheme] = useState(getTheme);
+  const [themeMessage, setThemeMessage] = useState('');
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [theme]);
+
+  /** Keep the selected appearance responsive even when its best-effort save fails. */
+  function toggleTheme() {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    updateTheme(next);
+    const result = setTheme(next);
+    setThemeMessage(result.ok ? '' : result.message);
+  }
   const location = useLocation();
   useEffect(() => { setSession(getSession()); }, [location]);
 
@@ -41,17 +55,22 @@ export default function App() {
   function refreshSession() { setSession(getSession()); }
   const current = getSession();
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 dark:bg-slate-950 dark:text-slate-100">
       <a href="#main" className={
         "sr-only z-50 rounded bg-white p-3 focus:not-sr-only focus:absolute focus-visible:ring-2 " +
-        "focus-visible:ring-indigo-500"
+        "focus-visible:ring-indigo-500 dark:bg-slate-900 dark:text-slate-100"
         }>
         Skip to content
       </a>
       {location.pathname === '/' || !session ? (
-        <PublicNavbar session={session} />
+        <PublicNavbar session={session} theme={theme} onToggle={toggleTheme} />
       ) : (
-        <Navbar session={session} onSessionChange={refreshSession} />
+        <Navbar session={session} onSessionChange={refreshSession} theme={theme} onToggle={toggleTheme} />
+      )}
+      {themeMessage && (
+        <p role="status" aria-label="Theme preference" className="mx-auto max-w-6xl px-4 py-2 text-sm text-slate-600 dark:text-slate-300">
+          {themeMessage}
+        </p>
       )}
       <Routes>
         <Route path="/" element={<LandingPage />} />

@@ -43,7 +43,59 @@ test('guest discovers newest three and activates a protected preview without alt
   await expect(page.getByLabel('Display Name')).toBeVisible();
 });
 
+test('guest activates the hero preview and reaches login without changing posts or session', async ({ page }) => {
+  await prepare(page);
+  await page.goto('/');
+  const hero = page.getByRole('region', { name: 'WriteSpace', exact: true });
+  const preview = hero.getByRole('link', { name: 'Read newest', exact: true });
+  await expect(preview).toBeVisible();
+  await expect(preview).toHaveAttribute('href', '/blog/newest');
+  await expect(hero.getByRole('heading', { level: 3 })).toHaveText(['newest']);
+  await expect(page).toHaveURL(/\/$/);
+  const before = await page.evaluate(() => ({
+    posts: localStorage.getItem('writespace_posts'),
+    session: localStorage.getItem('writespace_session'),
+  }));
+  expect(before.session).toBeNull();
+  await preview.click();
+  await expect(page).toHaveURL(/\/login$/);
+  await expect(page.getByLabel('Username')).toBeVisible();
+  expect(await page.evaluate(() => ({
+    posts: localStorage.getItem('writespace_posts'),
+    session: localStorage.getItem('writespace_session'),
+  }))).toEqual(before);
+});
+
 for (const role of ['user', 'admin']) {
+  test(`authenticated ${role} activates the hero preview and reads stored content without changing posts or session`, async ({ page }) => {
+    const identity = role === 'admin'
+      ? { userId: 'admin', username: 'admin', displayName: 'Admin', role }
+      : { userId: 'writer', username: 'mira', displayName: 'Mira', role };
+    await prepare(page, identity);
+    await page.goto('/');
+    const hero = page.getByRole('region', { name: 'WriteSpace', exact: true });
+    const preview = hero.getByRole('link', { name: 'Read newest', exact: true });
+    await expect(preview).toBeVisible();
+    await expect(preview).toHaveAttribute('href', '/blog/newest');
+    await expect(hero.getByRole('heading', { level: 3 })).toHaveText(['newest']);
+    await expect(page).toHaveURL(/\/$/);
+    const before = await page.evaluate(() => ({
+      posts: localStorage.getItem('writespace_posts'),
+      session: localStorage.getItem('writespace_session'),
+    }));
+    expect(JSON.parse(before.session)).toEqual(identity);
+    const storedPost = JSON.parse(before.posts).find((post) => post.id === 'newest');
+    await preview.click();
+    await expect(page).toHaveURL(/\/blog\/newest$/);
+    const detail = page.getByRole('main').getByRole('article');
+    await expect(detail.getByRole('heading', { level: 1 })).toHaveText(storedPost.title);
+    await expect(detail.getByText(storedPost.content, { exact: true })).toBeVisible();
+    expect(await page.evaluate(() => ({
+      posts: localStorage.getItem('writespace_posts'),
+      session: localStorage.getItem('writespace_session'),
+    }))).toEqual(before);
+  });
+
   test(`authenticated ${role} Start Reading opens blogs and session survives reload`, async ({ page }) => {
     const identity = role === 'admin'
       ? { userId: 'admin', username: 'admin', displayName: 'Admin', role }
