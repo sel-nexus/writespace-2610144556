@@ -1,6 +1,51 @@
 {
   "nodes": [
     {
+      "id": "changelog",
+      "label": "CHANGELOG.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_writespace_brownfield_changelog",
+      "label": "WriteSpace \u2014 brownfield changelog",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_added_and_extended",
+      "label": "Added and extended",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L3",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_compatibility_and_migrations",
+      "label": "Compatibility and migrations",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L11",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_verification_and_remaining_warnings",
+      "label": "Verification and remaining warnings",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L14",
+      "_origin": "ast"
+    },
+    {
       "id": "frontend_e2e_admin_spec",
       "label": "admin.spec.js",
       "file_type": "code",
@@ -704,6 +749,22 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 10
+    },
+    {
+      "id": "frontend_preflight",
+      "label": "preflight.mjs",
+      "file_type": "code",
+      "source_file": "frontend/preflight.mjs",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_preflight_captures",
+      "label": "captures",
+      "file_type": "code",
+      "source_file": "frontend/preflight.mjs",
+      "source_location": "L9",
+      "_origin": "ast"
     },
     {
       "id": "frontend_scripts_preflight",
@@ -1806,6 +1867,14 @@
       "community": 4
     },
     {
+      "id": "frontend_src_utils_auth_test_largeinput",
+      "label": "largeInput",
+      "file_type": "code",
+      "source_file": "frontend/src/utils/auth.test.js",
+      "source_location": "L7",
+      "_origin": "ast"
+    },
+    {
       "id": "frontend_src_utils_posts",
       "label": "posts.js",
       "file_type": "code",
@@ -2239,11 +2308,19 @@
       "_origin": "ast"
     },
     {
+      "id": "frontend_src_utils_users_test_largeinput",
+      "label": "largeInput",
+      "file_type": "code",
+      "source_file": "frontend/src/utils/users.test.js",
+      "source_location": "L8",
+      "_origin": "ast"
+    },
+    {
       "id": "frontend_src_utils_users_test_account",
       "label": "account()",
       "file_type": "code",
       "source_file": "frontend/src/utils/users.test.js",
-      "source_location": "L9",
+      "source_location": "L15",
       "_callable": true,
       "_origin": "ast"
     },
@@ -2267,6 +2344,46 @@
     }
   ],
   "links": [
+    {
+      "source": "changelog",
+      "target": "changelog_writespace_brownfield_changelog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "changelog_writespace_brownfield_changelog",
+      "target": "changelog_added_and_extended",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "changelog_writespace_brownfield_changelog",
+      "target": "changelog_compatibility_and_migrations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "changelog_writespace_brownfield_changelog",
+      "target": "changelog_verification_and_remaining_warnings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
     {
       "source": "frontend_e2e_admin_spec",
       "target": "frontend_e2e_fixtures",
@@ -3295,6 +3412,27 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/playwright.config.js",
       "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_preflight",
+      "target": "ref_playwright_test",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/preflight.mjs",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_preflight",
+      "target": "frontend_preflight_captures",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/preflight.mjs",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7672,6 +7810,16 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_utils_auth_test",
+      "target": "frontend_src_utils_auth_test_largeinput",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/auth.test.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_utils_posts",
       "target": "frontend_src_utils_storage",
       "relation": "imports_from",
@@ -9188,11 +9336,21 @@
     },
     {
       "source": "frontend_src_utils_users_test",
+      "target": "frontend_src_utils_users_test_largeinput",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/users.test.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_utils_users_test",
       "target": "frontend_src_utils_users_test_account",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/users.test.js",
-      "source_location": "L9",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -9203,7 +9361,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/users.test.js",
-      "source_location": "L43",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -10454,7 +10612,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/components/Navbar.jsx",
-      "source_location": "L71",
+      "source_location": "L74",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -10880,10 +11038,10 @@
     }
   ],
   "metadata": {
-    "built_at": "2026-11-05T12:01:55.025487+00:00",
+    "built_at": "2026-11-05T12:41:05.844804+00:00",
     "version": "graph_update-v1",
     "codebase_root": "C:\\artifacts-v2\\T0132PcJVCRTV000405112609383614\\developer",
     "force": true,
-    "files_scanned": 53
+    "files_scanned": 56
   }
 }
