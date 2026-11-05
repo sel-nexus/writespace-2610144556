@@ -4249,23 +4249,12 @@
     },
     {
       "source": "frontend_src_pages_auth_test",
-      "target": "frontend_src_pages_auth_test_mount",
+      "target": "frontend_src_pages_auth_test_location",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/auth.test.jsx",
-      "source_location": "L42",
-      "weight": 1.0,
-      "_origin": "ast"
-    },
-    {
-      "source": "frontend_src_pages_auth_test",
-      "target": "frontend_src_pages_auth_test_fillregistration",
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/pages/auth.test.jsx",
-      "source_location": "L92",
+      "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -4276,7 +4265,29 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/auth.test.jsx",
-      "source_location": "L109",
+      "source_location": "L44",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_pages_auth_test",
+      "target": "frontend_src_pages_auth_test_mount",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/auth.test.jsx",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_pages_auth_test",
+      "target": "frontend_src_pages_auth_test_fillregistration",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/auth.test.jsx",
+      "source_location": "L103",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8761,7 +8772,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/components/Navbar.jsx",
-      "source_location": "L53",
+      "source_location": "L57",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -9127,9 +9138,9 @@
     }
   ],
   "metadata": {
-    "built_at": "2026-11-04T15:04:19.353091+00:00",
+    "built_at": "2026-11-05T11:16:40.507853+00:00",
     "version": "graph_update-v1",
-    "codebase_root": "C:\\artifacts-v2\\T0132PcJVCRTV000404112610144556\\developer",
+    "codebase_root": "C:\\artifacts-v2\\T0132PcJVCRTV000405112609383614\\developer",
     "force": true,
     "files_scanned": 42
   }
