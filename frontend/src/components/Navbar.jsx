@@ -52,7 +52,10 @@ export function Navbar({ session, onSessionChange, theme, onToggle }) {
             <path d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-        <div id="workspace-links" className={`${mobileOpen ? 'flex' : 'hidden'} order-last w-full flex-col gap-2 sm:order-none sm:flex sm:w-auto sm:flex-row`}>
+        <div
+          id="workspace-links"
+          className={`${mobileOpen ? 'flex' : 'hidden'} order-last w-full flex-col gap-2 sm:order-none sm:flex sm:w-auto sm:flex-row`}
+        >
           {links.map((link) => (
             <NavLink key={link.to} to={link.to}
               className={({ isActive }) =>
