@@ -311,3 +311,91 @@ describe('additional fresh-read and presentation branches', () => {
     expect(container.querySelector('img, script')).toBeNull();
   });
 });
+
+
+describe('admin dark appearance regressions', () => {
+  it.each(['indigo', 'violet', 'teal', 'neutral'])('retains numeric content and dark surface for %s metrics', (tone) => {
+    render(<StatCard label="Count" value={0} tone={tone} />);
+    const metric = screen.getByRole('region', { name: 'Count' });
+    const color = tone === 'neutral' ? 'slate' : tone;
+    expect(metric).toHaveTextContent('0');
+    expect(metric).toHaveClass('dark:bg-' + color + (tone === 'neutral' ? '-900' : '-950'));
+    expect(metric).toHaveClass('dark:border-' + color + (tone === 'neutral' ? '-700' : '-800'));
+    expect(metric).toHaveClass('dark:text-' + color + '-100');
+  });
+  it('keeps the fourth metric neutral and unassigned even with a supplied value and tone', () => {
+    render(<StatCard label="Total users" value={42} tone="violet" pending />);
+    const metric = screen.getByRole('region', { name: 'Total users', exact: true });
+    expect(metric).toHaveClass('bg-white', 'dark:bg-slate-900', 'dark:text-slate-100');
+    expect(metric).toHaveTextContent('—');
+    expect(metric).not.toHaveTextContent('42');
+    expect(within(metric).getByText('Metric pending definition')).toHaveClass('dark:text-slate-300');
+  });
+  it('supplies dark forms, field errors, table and mobile surfaces without changing protected accounts', async () => {
+    setSession({ ...ADMIN_SESSION, userId: 'staff', username: 'staff' });
+    saveUsers([account(), account('staff', 'admin')]);
+    const { container } = mount();
+    expect(screen.getByRole('region', { name: 'Create User' })).toHaveClass('dark:bg-slate-900', 'dark:border-slate-700');
+    expect(table().parentElement).toHaveClass('dark:bg-slate-900', 'dark:border-slate-700');
+    expect(table().querySelector('thead')).toHaveClass('dark:bg-slate-800', 'dark:text-slate-300');
+    expect(table().querySelector('tbody')).toHaveClass('dark:divide-slate-700');
+    const cards = container.querySelector('[aria-label="User cards"]');
+    for (const profile of within(cards).getAllByRole('article')) {
+      expect(profile).toHaveClass('dark:bg-slate-900', 'dark:text-slate-100', 'dark:border-slate-700');
+    }
+    for (const presentation of [table(), cards]) {
+      expect(within(presentation).getByText('user', { exact: true })).toHaveClass('dark:bg-indigo-950', 'dark:text-indigo-200');
+      for (const name of ['admin', 'staff']) {
+        const button = within(presentation).getByRole('button', { name: 'Delete ' + name });
+        expect(button).toBeDisabled();
+        expect(button).toHaveClass('dark:disabled:bg-slate-800', 'dark:disabled:text-slate-400');
+      }
+      expect(within(presentation).getByRole('button', { name: 'Delete one' })).toHaveClass(
+        'dark:bg-red-950', 'dark:text-red-300', 'dark:hover:bg-red-900',
+      );
+      expect(presentation).not.toHaveTextContent('never-render-this');
+    }
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: 'Create User' }));
+    for (const name of ['Display Name', 'Username', 'Password', 'Role']) {
+      const field = screen.getByLabelText(name, { exact: true });
+      expect(field).toHaveClass('dark:bg-slate-950', 'dark:text-slate-100', 'dark:border-slate-600');
+      expect(field).toHaveAttribute('aria-invalid', 'true');
+      expect(container.querySelector('#' + field.getAttribute('aria-describedby'))).toHaveClass('dark:text-red-300');
+    }
+    expect(readUsers().value).toEqual([account(), account('staff', 'admin')]);
+    await fill(user);
+    await user.click(screen.getByRole('button', { name: 'Create User' }));
+    expect(screen.getByText('Account created.')).toHaveClass('dark:text-indigo-300');
+    expect(screen.queryByRole('alert')).toBeNull();
+  });
+  it('keeps dashboard content and failed deletion readable with dark action and error variants', async () => {
+    setSession(ADMIN_SESSION);
+    savePosts([post('one')]);
+    mount('/admin');
+    const recent = screen.getByRole('region', { name: 'Recent posts' });
+    expect(recent).toHaveClass('dark:bg-slate-900', 'dark:text-slate-100', 'dark:border-slate-700');
+    expect(screen.getByRole('link', { name: 'Manage Users' })).toHaveClass('dark:bg-slate-900', 'dark:text-indigo-300');
+    expect(screen.getByRole('link', { name: 'Edit one' })).toHaveClass('dark:text-indigo-300');
+    const button = screen.getByRole('button', { name: 'Delete one' });
+    expect(button).toHaveClass('dark:bg-red-950', 'dark:text-red-300');
+    vi.spyOn(window, 'confirm').mockImplementation(() => {
+      localStorage.removeItem(SESSION_KEY);
+      return true;
+    });
+    const user = userEvent.setup();
+    await user.click(button);
+    expect(screen.getByRole('alert')).toHaveClass('dark:bg-red-950', 'dark:text-red-300');
+    expect(within(recent).getByRole('link', { name: 'Edit one' })).toBeVisible();
+    expect(readPosts().value).toEqual([post('one')]);
+  });
+  it.each(['/admin', '/users'])('retains unreadable-storage warnings with dark status treatment at %s', (path) => {
+    setSession(ADMIN_SESSION);
+    localStorage.setItem(USERS_KEY, '{');
+    mount(path);
+    const warning = within(screen.getByRole('main')).getByRole('status');
+    expect(warning).toHaveClass('dark:bg-amber-950', 'dark:text-amber-200');
+    expect(warning).toHaveTextContent('unreadable');
+    expect(localStorage.getItem(USERS_KEY)).toBe('{');
+  });
+});

@@ -6,19 +6,28 @@ import { readPosts } from '../utils/storage.js';
 import { selectRecent } from '../utils/posts.js';
 import { BlogCard } from '../components/BlogCard.jsx';
 
-const focus = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2';
+const focus = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900';
 
 /** Show a non-persisted writing illustration, not a fabricated published post. */
 function WritingIllustration() {
   return (
-    <figure className="rounded-2xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60">
-      <figcaption className="text-sm font-semibold text-indigo-700">Writing illustration · not a saved post</figcaption>
-      <p className="mt-8 font-display text-3xl font-bold text-slate-900">A place for your next thought.</p>
-      <p className="mt-5 leading-relaxed text-slate-600">Start with a title. Make room for a sentence. Keep writing in plain text.</p>
+    <figure className={
+      'rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-8 ' +
+      'shadow-xl shadow-slate-200/60 dark:shadow-black/30'
+    }>
+      <figcaption className="text-sm font-semibold text-indigo-700 dark:text-indigo-300">
+        Writing illustration · not a saved post
+      </figcaption>
+      <p className="mt-8 font-display text-3xl font-bold text-slate-900 dark:text-slate-100">
+        A place for your next thought.
+      </p>
+      <p className="mt-5 leading-relaxed text-slate-600 dark:text-slate-300">
+        Start with a title. Make room for a sentence. Keep writing in plain text.
+      </p>
       <div aria-hidden="true" className="mt-8 space-y-3">
-        <div className="h-2 rounded bg-slate-100" />
-        <div className="h-2 w-5/6 rounded bg-slate-100" />
-        <div className="h-2 w-2/3 rounded bg-indigo-100" />
+        <div className="h-2 rounded bg-slate-100 dark:bg-slate-800" />
+        <div className="h-2 w-5/6 rounded bg-slate-100 dark:bg-slate-800" />
+        <div className="h-2 w-2/3 rounded bg-indigo-100 dark:bg-indigo-900" />
       </div>
     </figure>
   );
@@ -32,14 +41,19 @@ export default function LandingPage() {
   return (
     <>
       <main id="main">
-        <section aria-labelledby="hero-title" className="flex min-h-[calc(100dvh-5rem)] items-center bg-slate-50">
+        <section aria-labelledby="hero-title" className="flex min-h-[calc(100dvh-5rem)] items-center bg-slate-50 dark:bg-slate-950">
           <div className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 px-6 py-12 md:grid-cols-2 md:py-16">
             <div>
               <div aria-hidden="true" className="mb-8 h-1.5 w-20 rounded-full bg-gradient-to-r from-indigo-600 via-violet-600 to-pink-500" />
-              <h1 id="hero-title" className="font-display text-[clamp(3rem,6vw,5rem)] font-bold leading-tight tracking-tight text-slate-900">
+              <h1 id="hero-title" className={
+                'font-display text-[clamp(3rem,6vw,5rem)] font-bold leading-tight tracking-tight text-slate-900 ' +
+                'dark:text-slate-100'
+              }>
                 WriteSpace
               </h1>
-              <p className="mt-6 max-w-md text-xl leading-relaxed text-slate-600">Your thoughts. Your space. Beautifully simple.</p>
+              <p className="mt-6 max-w-md text-xl leading-relaxed text-slate-600 dark:text-slate-300">
+                Your thoughts. Your space. Beautifully simple.
+              </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <Link
                   to={session ? '/blogs' : '/login'}
@@ -50,8 +64,9 @@ export default function LandingPage() {
                 </Link>
                 <Link
                   to="/register"
-                  className={`inline-flex min-h-12 items-center justify-center rounded-xl border border-indigo-200 bg-white px-6
-                    font-semibold text-indigo-700 hover:bg-indigo-50 motion-safe:transition-colors ${focus}`}
+                  className={`inline-flex min-h-12 items-center justify-center rounded-xl border border-indigo-200
+                    dark:border-indigo-700 bg-white dark:bg-slate-900 px-6
+                    font-semibold text-indigo-700 dark:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-900 motion-safe:transition-colors ${focus}`}
                 >
                   Get Started Free
                 </Link>
@@ -62,41 +77,68 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-        <section aria-labelledby="features-title" className="bg-white px-6 py-16 md:py-20">
+        <section aria-labelledby="features-title" className="bg-white dark:bg-slate-900 px-6 py-16 md:py-20">
           <div className="mx-auto max-w-6xl">
-            <h2 id="features-title" className="font-display text-3xl font-bold text-slate-900">Features</h2>
+            <h2 id="features-title" className="font-display text-3xl font-bold text-slate-900 dark:text-slate-100">
+              Features
+            </h2>
             <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-              <article className="rounded-2xl bg-indigo-50 p-7">
-                <h3 className="font-display text-2xl font-bold text-slate-900">Write Freely</h3>
-                <p className="mt-4 leading-relaxed text-slate-700">Plain-text, distraction-free writing. Just your title, your words, and room to think.</p>
+              <article className="rounded-2xl bg-indigo-50 dark:bg-indigo-950 p-7">
+                <h3 className="font-display text-2xl font-bold text-slate-900 dark:text-slate-100">
+                  Write Freely
+                </h3>
+                <p className={
+                  'mt-4 leading-relaxed text-slate-700 dark:text-slate-200'
+                }>
+                  Plain-text, distraction-free writing. Just your title, your words, and room to think.
+                </p>
               </article>
-              <article className="rounded-2xl bg-slate-50 p-7">
-                <h3 className="font-display text-2xl font-bold text-slate-900">Private &amp; Local</h3>
-                <p className="mt-4 leading-relaxed text-slate-700">Data stays in this browser, not on a shared server. No cross-device sync or encryption.</p>
-                <p className="mt-4 text-sm leading-relaxed text-slate-600">
+              <article className="rounded-2xl bg-slate-50 dark:bg-slate-950 p-7">
+                <h3 className="font-display text-2xl font-bold text-slate-900 dark:text-slate-100">
+                  Private &amp; Local
+                </h3>
+                <p className={
+                  'mt-4 leading-relaxed text-slate-700 dark:text-slate-200'
+                }>
+                  Data stays in this browser, not on a shared server. No cross-device sync or encryption.
+                </p>
+                <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                   Demo only: passwords are stored in plaintext. Do not use real passwords or sensitive data.
                 </p>
               </article>
-              <article className="rounded-2xl bg-teal-50 p-7">
-                <h3 className="font-display text-2xl font-bold text-slate-900">Instant &amp; Fast</h3>
-                <p className="mt-4 leading-relaxed text-slate-700">Read and write locally without waiting on a server. Your browser holds this edition.</p>
+              <article className="rounded-2xl bg-teal-50 dark:bg-teal-950 p-7">
+                <h3 className="font-display text-2xl font-bold text-slate-900 dark:text-slate-100">
+                  Instant &amp; Fast
+                </h3>
+                <p className={
+                  'mt-4 leading-relaxed text-slate-700 dark:text-slate-200'
+                }>
+                  Read and write locally without waiting on a server. Your browser holds this edition.
+                </p>
               </article>
             </div>
           </div>
         </section>
         <section aria-labelledby="latest-title" className="mx-auto max-w-6xl px-6 py-16 md:py-20">
-          <h2 id="latest-title" className="font-display text-3xl font-bold text-slate-900">Latest from the Blog</h2>
+          <h2 id="latest-title" className="font-display text-3xl font-bold text-slate-900 dark:text-slate-100">
+            Latest from the Blog
+          </h2>
           {!result.ok && (
-            <p role="status" className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-amber-900">
+            <p role="status" className={
+              'mt-6 rounded-xl border border-amber-200 dark:border-amber-700 bg-amber-50 dark:bg-amber-950 p-4 ' +
+              'text-amber-900 dark:text-amber-200'
+            }>
               Local posts could not be read. Enable browser storage or restore valid local data, then reload. Nothing was changed.
             </p>
           )}
           {recent.length ? (
             <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {recent.map((post, index) => <BlogCard key={post.id} post={post} index={index} session={session} />)}
+              {recent.map((post, index) => (
+                <BlogCard key={post.id} post={post} index={index} session={session} />
+              ))}
             </div>
           ) : (
-            <p className="mt-8 rounded-2xl border border-dashed border-slate-300 p-10 text-center text-slate-600">
+            <p className="mt-8 rounded-2xl border border-dashed border-slate-300 dark:border-slate-600 p-10 text-center text-slate-600 dark:text-slate-300">
               No posts yet — check back soon!
             </p>
           )}
@@ -111,7 +153,9 @@ export default function LandingPage() {
               </Link>
             ))}
           </nav>
-          <p className="text-sm">© {new Date().getFullYear()} WriteSpace. All rights reserved.</p>
+          <p className="text-sm">
+            © {new Date().getFullYear()} WriteSpace. All rights reserved.
+          </p>
         </div>
       </footer>
     </>

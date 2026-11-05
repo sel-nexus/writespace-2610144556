@@ -40,84 +40,122 @@ export default function UserManagement() {
   }
 
   return (
-    <main id="main" className="mx-auto max-w-6xl space-y-8 px-4 py-10 sm:px-6">
+    <main id="main" className="mx-auto max-w-6xl space-y-8 px-4 py-10 text-slate-900 dark:text-slate-100 sm:px-6">
       <header>
-        <Link to="/admin" className="rounded text-indigo-700 underline focus-visible:ring-2 focus-visible:ring-indigo-500">
+        <Link to="/admin" className="rounded text-indigo-700 dark:text-indigo-300 underline focus-visible:ring-2 focus-visible:ring-indigo-500">
           Back to Dashboard
         </Link>
-        <h1 className="mt-4 font-display text-4xl font-bold">User Management</h1>
-        <p className="mt-3 text-slate-600">Create and manage the accounts in this browser.</p>
+        <h1 className="mt-4 font-display text-4xl font-bold">
+          User Management
+        </h1>
+        <p className="mt-3 text-slate-600 dark:text-slate-300">
+          Create and manage the accounts in this browser.
+        </p>
       </header>
       {!users.ok && (
-        <p role="status" className="rounded-xl bg-amber-50 p-4 text-amber-900">{users.message}</p>
+        <p role="status" className="rounded-xl bg-amber-50 dark:bg-amber-950 p-4 text-amber-900 dark:text-amber-200">
+          {users.message}
+        </p>
       )}
-      <section aria-label="Create User" className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 className="font-display text-2xl font-bold">Create User</h2>
-        <p className="my-4 rounded-xl bg-amber-50 p-4 text-sm text-amber-900">
+      <section aria-label="Create User" className={
+        'rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 p-6 shadow-sm'
+      }>
+        <h2 className="font-display text-2xl font-bold">
+          Create User
+        </h2>
+        <p className="my-4 rounded-xl bg-amber-50 dark:bg-amber-950 p-4 text-sm text-amber-900 dark:text-amber-200">
           Demo only — do not use real passwords. Passwords are stored as plaintext in this browser.
           These client-side checks are not secure authentication.
         </p>
         <form noValidate onSubmit={submit} className="grid gap-5 sm:grid-cols-2">
           {['displayName', 'username', 'password'].map((field) => (
             <div key={field}>
-              <label htmlFor={'account-' + field} className="mb-2 block text-sm font-semibold">{labels[field]}</label>
+              <label htmlFor={'account-' + field} className="mb-2 block text-sm font-semibold">
+                {labels[field]}
+              </label>
               <input id={'account-' + field} name={field} type={field === 'password' ? 'password' : 'text'}
                 autoComplete={field === 'password' ? 'new-password' : field === 'username' ? 'off' : 'name'}
                 required aria-required="true" value={form[field]}
                 onChange={(event) => setForm({ ...form, [field]: event.target.value })}
                 aria-invalid={Boolean(errors[field])} aria-describedby={errors[field] ? field + '-error' : undefined}
                 className={
-                  'w-full rounded-xl border border-slate-300 px-4 py-3 focus-visible:outline-none ' +
+                  'w-full rounded-xl border border-slate-300 dark:border-slate-600 px-4 py-3 dark:bg-slate-950 ' +
+                    'dark:text-slate-100 focus-visible:outline-none ' +
                   'focus-visible:ring-2 focus-visible:ring-indigo-500'
                 } />
               {errors[field] && (
-                <p id={field + '-error'} role="alert" className="mt-2 text-sm text-red-700">{errors[field]}</p>
+                <p id={field + '-error'} role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">
+                  {errors[field]}
+                </p>
               )}
             </div>
           ))}
           <div>
-            <label htmlFor="account-role" className="mb-2 block text-sm font-semibold">Role</label>
+            <label htmlFor="account-role" className="mb-2 block text-sm font-semibold">
+              Role
+            </label>
             <select id="account-role" name="role" required aria-required="true" value={form.role}
               onChange={(event) => setForm({ ...form, role: event.target.value })}
               aria-invalid={Boolean(errors.role)} aria-describedby={errors.role ? 'role-error' : undefined}
               className={
-                'w-full rounded-xl border border-slate-300 bg-white px-4 py-3 focus-visible:outline-none ' +
+                'w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white px-4 py-3 dark:bg-slate-950 ' +
+                  'dark:text-slate-100 focus-visible:outline-none ' +
                 'focus-visible:ring-2 focus-visible:ring-indigo-500'
               }>
-              <option value="">Select a role</option>
-              <option value="admin">Admin</option>
-              <option value="user">user</option>
+              <option value="">
+                Select a role
+              </option>
+              <option value="admin">
+                Admin
+              </option>
+              <option value="user">
+                user
+              </option>
             </select>
             {errors.role && (
-              <p id="role-error" role="alert" className="mt-2 text-sm text-red-700">{errors.role}</p>
+              <p id="role-error" role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">
+                {errors.role}
+              </p>
             )}
           </div>
           <button type="submit" className={
             'rounded-xl bg-indigo-600 px-4 py-3 font-semibold text-white hover:bg-indigo-700 sm:col-span-2 ' +
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2'
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ' +
+              'focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900'
           }>
             Create User
           </button>
         </form>
       </section>
       {error && (
-        <p role="alert" className="rounded-xl bg-red-50 p-4 text-red-700">{error}</p>
+        <p role="alert" className="rounded-xl bg-red-50 dark:bg-red-950 p-4 text-red-700 dark:text-red-300">
+          {error}
+        </p>
       )}
       {status && (
-        <p role="status" aria-live="polite" className="text-indigo-700">{status}</p>
+        <p role="status" aria-live="polite" className="text-indigo-700 dark:text-indigo-300">
+          {status}
+        </p>
       )}
       <section aria-label="Accounts" className="space-y-4">
-        <h2 className="font-display text-2xl font-bold">Accounts</h2>
-        <div className="hidden overflow-x-auto rounded-2xl border border-slate-200 bg-white sm:block">
+        <h2 className="font-display text-2xl font-bold">
+          Accounts
+        </h2>
+        <div className={
+          'hidden overflow-x-auto rounded-2xl border border-slate-200 bg-white dark:border-slate-700 ' +
+            'dark:bg-slate-900 dark:text-slate-100 sm:block'
+        }>
           <table aria-label="User accounts" className="w-full text-left">
-            <thead className="bg-slate-100 text-sm text-slate-600">
+            <thead className="bg-slate-100 dark:bg-slate-800 text-sm text-slate-600 dark:text-slate-300">
               <tr>
                 {['Display Name', 'Username', 'Role', 'Created', 'Actions'].map((label) => (
-                  <th key={label} scope="col" className="px-5 py-3">{label}</th>
+                  <th key={label} scope="col" className="px-5 py-3">
+                    {label}
+                  </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
               {profiles.map((user) => (
                 <UserRow key={user.id} user={user} currentId={session?.userId} onDelete={remove} />
               ))}

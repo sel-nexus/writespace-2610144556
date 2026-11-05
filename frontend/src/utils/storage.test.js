@@ -1,8 +1,70 @@
 /** Exercise valid durable collection transitions and every browser-data failure boundary. */
 import { describe, it, expect, vi } from 'vitest';
+import { getThemePreference, saveThemePreference, THEME_KEY } from './storage.js';
 import { getPosts, savePosts, getUsers, saveUsers, readUsers, isText, isRecord, isRole, isPost, isUser, storageFailure } from './storage.js';
 const post = { id: 'p', title: 'Title', content: 'Text', createdAt: 'invalid-date', authorId: 'u', authorName: 'Writer' };
 const user = { id: 'u', displayName: 'Writer', username: 'writer', password: 'demo', role: 'user', createdAt: '2026-01-01' };
+
+describe('isolated appearance preference', () => {
+  it('defaults missing preference to light without any writes or removals', () => {
+    const write = vi.spyOn(Storage.prototype, 'setItem');
+    const remove = vi.spyOn(Storage.prototype, 'removeItem');
+    expect(getThemePreference()).toBe('light');
+    expect(localStorage.length).toBe(0);
+    expect(write).not.toHaveBeenCalled();
+    expect(remove).not.toHaveBeenCalled();
+  });
+  it.each(['light', 'dark'])('saves and freshly reads exact raw %s', (theme) => {
+    expect(saveThemePreference(theme)).toEqual({ ok: true, value: theme });
+    expect(localStorage.getItem(THEME_KEY)).toBe(theme);
+    expect(getThemePreference()).toBe(theme);
+  });
+  it.each(['', 'Dark', 'LIGHT', ' dark ', '"dark"', '{}', 'null', 'true', '1', '<script>'])
+    ('defaults invalid raw %s without repairing it', (raw) => {
+      localStorage.setItem(THEME_KEY, raw);
+      const write = vi.spyOn(Storage.prototype, 'setItem');
+      const remove = vi.spyOn(Storage.prototype, 'removeItem');
+      expect(getThemePreference()).toBe('light');
+      expect(localStorage.getItem(THEME_KEY)).toBe(raw);
+      expect(write).not.toHaveBeenCalled();
+      expect(remove).not.toHaveBeenCalled();
+    });
+  it.each([undefined, null, 1, true, {}, [], new String('dark'), 'Dark', ' dark ', '"dark"'])
+    ('rejects invalid write %j without changing the previous preference', (value) => {
+      expect(saveThemePreference('dark')).toEqual({ ok: true, value: 'dark' });
+      expect(saveThemePreference(value)).toEqual({ ok: false, error: 'invalid' });
+      expect(getThemePreference()).toBe('dark');
+    });
+  it.each(['SecurityError', 'QuotaExceededError', 'Error'])('handles %s reads without writes', (name) => {
+    const write = vi.spyOn(Storage.prototype, 'setItem');
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => { throw new DOMException('blocked', name); });
+    expect(getThemePreference()).toBe('light');
+    expect(write).not.toHaveBeenCalled();
+  });
+  it.each([
+    ['SecurityError', 'unavailable'], ['QuotaExceededError', 'quota'], ['Error', 'unknown'],
+    ['ReferenceError', 'unavailable'], ['TypeError', 'unavailable'],
+  ])('reports %s writes without losing prior data or exposing exception details', (name, kind) => {
+    expect(saveThemePreference('light')).toEqual({ ok: true, value: 'light' });
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new DOMException('sensitive credentials', name); });
+    expect(saveThemePreference('dark')).toEqual({ ok: false, error: kind });
+    expect(getThemePreference()).toBe('light');
+  });
+  it('handles absent storage for both read and write', () => {
+    vi.stubGlobal('localStorage', undefined);
+    expect(getThemePreference()).toBe('light');
+    expect(saveThemePreference('dark')).toEqual({ ok: false, error: 'unavailable' });
+  });
+  it('changes only the theme key and preserves collection and session bytes', () => {
+    const keys = ['writespace_posts', 'writespace_users', 'writespace_session', 'unrelated'];
+    keys.forEach((key) => localStorage.setItem(key, `unchanged:${key}`));
+    expect(saveThemePreference('dark')).toEqual({ ok: true, value: 'dark' });
+    expect(saveThemePreference('light')).toEqual({ ok: true, value: 'light' });
+    expect(localStorage.length).toBe(5);
+    keys.forEach((key) => expect(localStorage.getItem(key)).toBe(`unchanged:${key}`));
+    expect(getThemePreference()).toBe('light');
+  });
+});
 
 describe('browser collections', () => {
   it('rejects sparse arrays rather than saving null records', () => {
