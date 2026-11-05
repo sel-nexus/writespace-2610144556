@@ -1,6 +1,60 @@
 {
   "nodes": [
     {
+      "id": "changelog",
+      "label": "CHANGELOG.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_writespace_brownfield_changelog",
+      "label": "WriteSpace brownfield changelog",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_this_revision",
+      "label": "This revision",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L3",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_modified_files",
+      "label": "Modified files",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L9",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_compatibility_and_migration",
+      "label": "Compatibility and migration",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L14",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_verification_and_warnings",
+      "label": "Verification and warnings",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L17",
+      "_origin": "ast"
+    },
+    {
       "id": "frontend_e2e_admin_spec",
       "label": "admin.spec.js",
       "file_type": "code",
@@ -149,6 +203,23 @@
       "file_type": "code",
       "source_file": "frontend/e2e/landing.spec.js",
       "source_location": "L14",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_e2e_theme_spec",
+      "label": "theme.spec.js",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_e2e_theme_spec_storage_setitem",
+      "label": ".setItem()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L84",
       "_callable": true,
       "_origin": "ast"
     },
@@ -656,7 +727,7 @@
       "label": "NotFound()",
       "file_type": "code",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "_callable": true,
       "_origin": "ast",
       "community": 3
@@ -666,17 +737,26 @@
       "label": "App()",
       "file_type": "code",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L35",
+      "source_location": "L42",
       "_callable": true,
       "_origin": "ast",
       "community": 3
+    },
+    {
+      "id": "frontend_src_app_app_toggletheme",
+      "label": "toggleTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L52",
+      "_callable": true,
+      "_origin": "ast"
     },
     {
       "id": "frontend_src_app_app_refreshsession",
       "label": "refreshSession()",
       "file_type": "code",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L41",
+      "source_location": "L59",
       "_callable": true,
       "_origin": "ast",
       "community": 3
@@ -758,7 +838,7 @@
       "label": "Navbar()",
       "file_type": "code",
       "source_file": "frontend/src/components/Navbar.jsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "_callable": true,
       "_origin": "ast",
       "community": 1
@@ -768,7 +848,7 @@
       "label": "logout()",
       "file_type": "code",
       "source_file": "frontend/src/components/Navbar.jsx",
-      "source_location": "L21",
+      "source_location": "L22",
       "_callable": true,
       "_origin": "ast",
       "community": 1
@@ -806,7 +886,7 @@
       "label": "PublicNavbar()",
       "file_type": "code",
       "source_file": "frontend/src/components/PublicNavbar.jsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "_callable": true,
       "_origin": "ast",
       "community": 1
@@ -833,6 +913,23 @@
       "file_type": "code",
       "source_file": "frontend/src/components/StatCard.jsx",
       "source_location": "L15",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_components_themetoggle",
+      "label": "ThemeToggle.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/ThemeToggle.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_components_themetoggle_themetoggle",
+      "label": "ThemeToggle()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/ThemeToggle.jsx",
+      "source_location": "L8",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1150,7 +1247,7 @@
       "label": "LandingPage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/LandingPage.jsx",
-      "source_location": "L28",
+      "source_location": "L37",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1323,6 +1420,23 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 0
+    },
+    {
+      "id": "frontend_src_theme_test",
+      "label": "theme.test.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_theme_test_mount",
+      "label": "mount()",
+      "file_type": "code",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L11",
+      "_callable": true,
+      "_origin": "ast"
     },
     {
       "id": "frontend_src_utils_auth",
@@ -1628,11 +1742,19 @@
       "community": 2
     },
     {
+      "id": "frontend_src_utils_storage_theme_key",
+      "label": "THEME_KEY",
+      "file_type": "code",
+      "source_file": "frontend/src/utils/storage.js",
+      "source_location": "L4",
+      "_origin": "ast"
+    },
+    {
       "id": "frontend_src_utils_storage_istext",
       "label": "isText()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L10",
+      "source_location": "L11",
       "_callable": true,
       "_origin": "ast",
       "community": 4
@@ -1642,7 +1764,7 @@
       "label": "isRecord()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L18",
+      "source_location": "L19",
       "_callable": true,
       "_origin": "ast",
       "community": 2
@@ -1652,7 +1774,7 @@
       "label": "isRole()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L26",
+      "source_location": "L27",
       "_callable": true,
       "_origin": "ast",
       "community": 2
@@ -1662,7 +1784,7 @@
       "label": "isPost()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L34",
+      "source_location": "L35",
       "_callable": true,
       "_origin": "ast",
       "community": 2
@@ -1672,7 +1794,7 @@
       "label": "isUser()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L43",
+      "source_location": "L44",
       "_callable": true,
       "_origin": "ast",
       "community": 2
@@ -1682,7 +1804,7 @@
       "label": "storageFailure()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L52",
+      "source_location": "L53",
       "_callable": true,
       "_origin": "ast",
       "community": 2
@@ -1692,7 +1814,7 @@
       "label": "readCollection()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L63",
+      "source_location": "L64",
       "_callable": true,
       "_origin": "ast",
       "community": 2
@@ -1702,7 +1824,7 @@
       "label": "readUsers()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L78",
+      "source_location": "L79",
       "_callable": true,
       "_origin": "ast",
       "community": 2
@@ -1712,7 +1834,7 @@
       "label": "getUsers()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L83",
+      "source_location": "L84",
       "_callable": true,
       "_origin": "ast",
       "community": 2
@@ -1722,7 +1844,7 @@
       "label": "getPosts()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L89",
+      "source_location": "L90",
       "_callable": true,
       "_origin": "ast",
       "community": 2
@@ -1732,7 +1854,7 @@
       "label": "readPosts()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L95",
+      "source_location": "L96",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1741,7 +1863,7 @@
       "label": "saveCollection()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L100",
+      "source_location": "L101",
       "_callable": true,
       "_origin": "ast",
       "community": 2
@@ -1751,7 +1873,7 @@
       "label": "savePosts()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L114",
+      "source_location": "L115",
       "_callable": true,
       "_origin": "ast",
       "community": 2
@@ -1761,10 +1883,28 @@
       "label": "saveUsers()",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L122",
+      "source_location": "L123",
       "_callable": true,
       "_origin": "ast",
       "community": 2
+    },
+    {
+      "id": "frontend_src_utils_storage_getthemepreference",
+      "label": "getThemePreference()",
+      "file_type": "code",
+      "source_file": "frontend/src/utils/storage.js",
+      "source_location": "L130",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_utils_storage_savethemepreference",
+      "label": "saveThemePreference()",
+      "file_type": "code",
+      "source_file": "frontend/src/utils/storage.js",
+      "source_location": "L145",
+      "_callable": true,
+      "_origin": "ast"
     },
     {
       "id": "frontend_src_utils_storage_test",
@@ -1780,7 +1920,7 @@
       "label": "post",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L4",
+      "source_location": "L5",
       "_origin": "ast",
       "community": 2
     },
@@ -1789,7 +1929,7 @@
       "label": "user",
       "file_type": "code",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L5",
+      "source_location": "L6",
       "_origin": "ast",
       "community": 2
     },
@@ -1896,9 +2036,75 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 0
+    },
+    {
+      "id": "theme_preflight",
+      "label": "theme-preflight.mjs",
+      "file_type": "code",
+      "source_file": "theme-preflight.mjs",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_preflight_output",
+      "label": "output",
+      "file_type": "code",
+      "source_file": "theme-preflight.mjs",
+      "source_location": "L6",
+      "_origin": "ast"
     }
   ],
   "links": [
+    {
+      "source": "changelog",
+      "target": "changelog_writespace_brownfield_changelog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "changelog_writespace_brownfield_changelog",
+      "target": "changelog_this_revision",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "changelog_writespace_brownfield_changelog",
+      "target": "changelog_modified_files",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "changelog_writespace_brownfield_changelog",
+      "target": "changelog_compatibility_and_migration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "changelog_writespace_brownfield_changelog",
+      "target": "changelog_verification_and_warnings",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
     {
       "source": "frontend_e2e_admin_spec",
       "target": "frontend_e2e_fixtures",
@@ -1979,7 +2185,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/admin.spec.js",
-      "source_location": "L40",
+      "source_location": "L47",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -1990,7 +2196,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/admin.spec.js",
-      "source_location": "L66",
+      "source_location": "L77",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2001,7 +2207,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/admin.spec.js",
-      "source_location": "L79",
+      "source_location": "L92",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2119,7 +2325,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/blogs.spec.js",
-      "source_location": "L172",
+      "source_location": "L192",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2184,6 +2390,17 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/landing.spec.js",
       "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_e2e_theme_spec",
+      "target": "ref_playwright_test",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2814,12 +3031,45 @@
     },
     {
       "source": "frontend_src_app",
-      "target": "frontend_src_components_publicnavbar",
+      "target": "frontend_src_utils_storage",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
       "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app",
+      "target": "frontend_src_utils_storage_getthemepreference",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app",
+      "target": "frontend_src_utils_storage_savethemepreference",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app",
+      "target": "frontend_src_components_publicnavbar",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2830,7 +3080,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2841,7 +3091,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2852,7 +3102,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2863,7 +3113,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2874,7 +3124,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2885,7 +3135,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2896,7 +3146,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2907,7 +3157,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2918,7 +3168,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2929,7 +3179,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2940,7 +3190,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2951,7 +3201,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2962,7 +3212,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2972,7 +3222,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2982,7 +3232,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L35",
+      "source_location": "L42",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app",
+      "target": "frontend_src_app_app_toggletheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L52",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2992,7 +3252,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L41",
+      "source_location": "L59",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -3003,7 +3263,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L94",
+      "source_location": "L112",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -3235,11 +3495,33 @@
     },
     {
       "source": "frontend_src_components_navbar",
+      "target": "frontend_src_components_themetoggle",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Navbar.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_components_navbar",
+      "target": "frontend_src_components_themetoggle_themetoggle",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Navbar.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_components_navbar",
       "target": "frontend_src_components_navbar_navbar",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/Navbar.jsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -3249,7 +3531,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/Navbar.jsx",
-      "source_location": "L21",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -3375,11 +3657,33 @@
     },
     {
       "source": "frontend_src_components_publicnavbar",
+      "target": "frontend_src_components_themetoggle",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/PublicNavbar.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_components_publicnavbar",
+      "target": "frontend_src_components_themetoggle_themetoggle",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/PublicNavbar.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_components_publicnavbar",
       "target": "frontend_src_components_publicnavbar_publicnavbar",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/PublicNavbar.jsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -3411,6 +3715,27 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/StatCard.jsx",
       "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_components_themetoggle",
+      "target": "ref_prop_types",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/ThemeToggle.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_components_themetoggle",
+      "target": "frontend_src_components_themetoggle_themetoggle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/ThemeToggle.jsx",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -4049,7 +4374,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/AdminDashboard.jsx",
-      "source_location": "L77",
+      "source_location": "L103",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -4535,7 +4860,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/blogs.test.jsx",
-      "source_location": "L156",
+      "source_location": "L180",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -5022,7 +5347,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/LandingPage.jsx",
-      "source_location": "L28",
+      "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -5033,7 +5358,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/LandingPage.jsx",
-      "source_location": "L61",
+      "source_location": "L76",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -5692,6 +6017,137 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/test/setup.js",
       "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_theme_test",
+      "target": "ref_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_theme_test",
+      "target": "ref_vitest",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_theme_test",
+      "target": "ref_testing_library_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_theme_test",
+      "target": "ref_testing_library_user_event",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_theme_test",
+      "target": "ref_react_router_dom",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_theme_test",
+      "target": "frontend_src_app",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_theme_test",
+      "target": "frontend_src_utils_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_theme_test",
+      "target": "frontend_src_utils_auth_admin_session",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_theme_test",
+      "target": "frontend_src_utils_auth_getsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_theme_test",
+      "target": "frontend_src_utils_auth_setsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_theme_test",
+      "target": "frontend_src_theme_test_mount",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_theme_test",
+      "target": "frontend_src_theme_test_mount",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6714,11 +7170,21 @@
     },
     {
       "source": "frontend_src_utils_storage",
+      "target": "frontend_src_utils_storage_theme_key",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/storage.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_utils_storage",
       "target": "frontend_src_utils_storage_istext",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6728,7 +7194,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6738,7 +7204,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6748,7 +7214,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L34",
+      "source_location": "L35",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6758,7 +7224,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L43",
+      "source_location": "L44",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6768,7 +7234,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L52",
+      "source_location": "L53",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6778,7 +7244,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L63",
+      "source_location": "L64",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6788,7 +7254,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L78",
+      "source_location": "L79",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6798,7 +7264,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L83",
+      "source_location": "L84",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6808,7 +7274,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L89",
+      "source_location": "L90",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6818,7 +7284,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L95",
+      "source_location": "L96",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6828,7 +7294,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L100",
+      "source_location": "L101",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6838,7 +7304,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L114",
+      "source_location": "L115",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6848,24 +7314,33 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L122",
+      "source_location": "L123",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_utils_storage",
+      "target": "frontend_src_utils_storage_getthemepreference",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/storage.js",
+      "source_location": "L130",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_utils_storage",
+      "target": "frontend_src_utils_storage_savethemepreference",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/storage.js",
+      "source_location": "L145",
       "weight": 1.0,
       "_origin": "ast"
     },
     {
       "source": "frontend_src_utils_storage_ispost",
       "target": "frontend_src_utils_storage_isrecord",
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L35",
-      "weight": 1.0,
-      "_origin": "ast"
-    },
-    {
-      "source": "frontend_src_utils_storage_ispost",
-      "target": "frontend_src_utils_storage_istext",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -6875,13 +7350,24 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_utils_storage_ispost",
+      "target": "frontend_src_utils_storage_istext",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/storage.js",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_utils_storage_isuser",
       "target": "frontend_src_utils_storage_isrecord",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L44",
+      "source_location": "L45",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6892,7 +7378,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L45",
+      "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6903,7 +7389,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L45",
+      "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6914,7 +7400,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L73",
+      "source_location": "L74",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6925,7 +7411,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L79",
+      "source_location": "L80",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6937,7 +7423,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.85,
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L79",
+      "source_location": "L80",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6948,7 +7434,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L84",
+      "source_location": "L85",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6959,7 +7445,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L90",
+      "source_location": "L91",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6970,7 +7456,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L96",
+      "source_location": "L97",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6982,7 +7468,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.85,
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L96",
+      "source_location": "L97",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -6993,7 +7479,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L106",
+      "source_location": "L107",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7004,7 +7490,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L115",
+      "source_location": "L116",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7016,7 +7502,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.85,
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L115",
+      "source_location": "L116",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7027,7 +7513,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L123",
+      "source_location": "L124",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7039,7 +7525,18 @@
       "confidence": "INFERRED",
       "confidence_score": 0.85,
       "source_file": "frontend/src/utils/storage.js",
-      "source_location": "L123",
+      "source_location": "L124",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_utils_storage_savethemepreference",
+      "target": "frontend_src_utils_storage_storagefailure",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/storage.js",
+      "source_location": "L151",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7067,12 +7564,56 @@
     },
     {
       "source": "frontend_src_utils_storage_test",
-      "target": "frontend_src_utils_storage_getposts",
+      "target": "frontend_src_utils_storage_getthemepreference",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.test.js",
       "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_utils_storage_test",
+      "target": "frontend_src_utils_storage_savethemepreference",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/storage.test.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_utils_storage_test",
+      "target": "frontend_src_utils_storage_theme_key",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/storage.test.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_utils_storage_test",
+      "target": "frontend_src_utils_storage",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/storage.test.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_utils_storage_test",
+      "target": "frontend_src_utils_storage_getposts",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/storage.test.js",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7083,7 +7624,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L3",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7094,7 +7635,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L3",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7105,7 +7646,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L3",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7116,7 +7657,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L3",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7127,7 +7668,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L3",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7138,7 +7679,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L3",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7149,7 +7690,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L3",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7160,7 +7701,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L3",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7171,7 +7712,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L3",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7182,7 +7723,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L3",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7192,7 +7733,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7202,7 +7743,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7661,19 +8202,18 @@
       "_origin": "ast"
     },
     {
-      "source": "frontend_src_app",
-      "target": "frontend_src_pages_loginpage_loginpage",
-      "relation": "imports",
-      "context": "import",
+      "source": "theme_preflight",
+      "target": "theme_preflight_output",
+      "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L8",
+      "source_file": "theme-preflight.mjs",
+      "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast"
     },
     {
       "source": "frontend_src_app",
-      "target": "frontend_src_pages_registerpage_registerpage",
+      "target": "frontend_src_pages_loginpage_loginpage",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7684,7 +8224,7 @@
     },
     {
       "source": "frontend_src_app",
-      "target": "frontend_src_pages_landingpage_landingpage",
+      "target": "frontend_src_pages_registerpage_registerpage",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7695,7 +8235,7 @@
     },
     {
       "source": "frontend_src_app",
-      "target": "frontend_src_pages_home_home",
+      "target": "frontend_src_pages_landingpage_landingpage",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7706,7 +8246,7 @@
     },
     {
       "source": "frontend_src_app",
-      "target": "frontend_src_pages_readblog_readblog",
+      "target": "frontend_src_pages_home_home",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7717,7 +8257,7 @@
     },
     {
       "source": "frontend_src_app",
-      "target": "frontend_src_pages_writeblog_writeblog",
+      "target": "frontend_src_pages_readblog_readblog",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7728,7 +8268,7 @@
     },
     {
       "source": "frontend_src_app",
-      "target": "frontend_src_pages_admindashboard_admindashboard",
+      "target": "frontend_src_pages_writeblog_writeblog",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7739,12 +8279,23 @@
     },
     {
       "source": "frontend_src_app",
-      "target": "frontend_src_pages_usermanagement_usermanagement",
+      "target": "frontend_src_pages_admindashboard_admindashboard",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
       "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app",
+      "target": "frontend_src_pages_usermanagement_usermanagement",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7804,13 +8355,35 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_theme_test",
+      "target": "frontend_src_app_app",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_app_app",
       "target": "frontend_src_utils_auth_getsession",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L38",
+      "source_location": "L46",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app",
+      "target": "frontend_src_utils_storage_savethemepreference",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L55",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7821,7 +8394,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L59",
+      "source_location": "L77",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7832,7 +8405,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/BlogCard.jsx",
-      "source_location": "L44",
+      "source_location": "L64",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7843,7 +8416,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/Navbar.jsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7865,7 +8438,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/PublicNavbar.jsx",
-      "source_location": "L21",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7920,7 +8493,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/AdminDashboard.jsx",
-      "source_location": "L62",
+      "source_location": "L81",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7964,7 +8537,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/LandingPage.jsx",
-      "source_location": "L30",
+      "source_location": "L39",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -7975,7 +8548,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/LandingPage.jsx",
-      "source_location": "L31",
+      "source_location": "L40",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8586,13 +9159,25 @@
     },
     {
       "source": "frontend_src_app_app",
+      "target": "frontend_src_utils_storage_getthemepreference",
+      "relation": "indirect_call",
+      "context": "argument",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app",
       "target": "frontend_src_utils_auth_setsession",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L38",
+      "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8604,7 +9189,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L52",
+      "source_location": "L70",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8616,7 +9201,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L54",
+      "source_location": "L72",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8628,7 +9213,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L57",
+      "source_location": "L75",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8640,7 +9225,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L59",
+      "source_location": "L77",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8652,7 +9237,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L62",
+      "source_location": "L80",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8664,7 +9249,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L65",
+      "source_location": "L83",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8676,7 +9261,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L66",
+      "source_location": "L84",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8688,7 +9273,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L71",
+      "source_location": "L89",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8700,7 +9285,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L76",
+      "source_location": "L94",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8712,7 +9297,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L86",
+      "source_location": "L104",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8724,7 +9309,19 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L91",
+      "source_location": "L109",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app_toggletheme",
+      "target": "frontend_src_utils_storage_savethemepreference",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L55",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8736,7 +9333,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L41",
+      "source_location": "L59",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8748,7 +9345,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L41",
+      "source_location": "L59",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8760,7 +9357,19 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/components/BlogCard.jsx",
-      "source_location": "L41",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_components_navbar_navbar",
+      "target": "frontend_src_components_themetoggle_themetoggle",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/components/Navbar.jsx",
+      "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8772,7 +9381,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/components/Navbar.jsx",
-      "source_location": "L57",
+      "source_location": "L67",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8784,7 +9393,19 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/components/Navbar.jsx",
-      "source_location": "L22",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_components_publicnavbar_publicnavbar",
+      "target": "frontend_src_components_themetoggle_themetoggle",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/components/PublicNavbar.jsx",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8796,7 +9417,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/components/PublicNavbar.jsx",
-      "source_location": "L19",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8844,7 +9465,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/pages/AdminDashboard.jsx",
-      "source_location": "L35",
+      "source_location": "L41",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8904,7 +9525,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/pages/Home.jsx",
-      "source_location": "L35",
+      "source_location": "L57",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8916,7 +9537,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.85,
       "source_file": "frontend/src/pages/LandingPage.jsx",
-      "source_location": "L29",
+      "source_location": "L38",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8928,7 +9549,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/pages/LandingPage.jsx",
-      "source_location": "L61",
+      "source_location": "L76",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8952,7 +9573,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/pages/ReadBlog.jsx",
-      "source_location": "L43",
+      "source_location": "L57",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -8988,7 +9609,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/pages/UserManagement.jsx",
-      "source_location": "L122",
+      "source_location": "L160",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -9077,6 +9698,18 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_theme_test_mount",
+      "target": "frontend_src_app_app",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/theme.test.jsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_utils_posts_selectrecent",
       "target": "frontend_src_utils_storage_ispost",
       "relation": "indirect_call",
@@ -9096,7 +9729,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.85,
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L16",
+      "source_location": "L78",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -9108,7 +9741,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.85,
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L16",
+      "source_location": "L78",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -9120,7 +9753,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.85,
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L16",
+      "source_location": "L78",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -9132,16 +9765,40 @@
       "confidence": "INFERRED",
       "confidence_score": 0.85,
       "source_file": "frontend/src/utils/storage.test.js",
-      "source_location": "L16",
+      "source_location": "L78",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "changelog_this_revision",
+      "target": "frontend_src_utils_storage_getthemepreference",
+      "relation": "references",
+      "context": "getThemePreference()",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "changelog_this_revision",
+      "target": "frontend_src_utils_storage_savethemepreference",
+      "relation": "references",
+      "context": "saveThemePreference()",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast"
     }
   ],
   "metadata": {
-    "built_at": "2026-11-05T05:46:19.953259+00:00",
+    "built_at": "2026-11-05T06:48:11.589884+00:00",
     "version": "graph_update-v1",
     "codebase_root": "C:\\artifacts-v2\\T0132PcJVCRTV000404112617483432\\developer",
     "force": true,
-    "files_scanned": 42
+    "files_scanned": 47
   }
 }
