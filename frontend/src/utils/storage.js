@@ -127,7 +127,7 @@ export function saveUsers(users) {
 /** Read an exact raw preference, defaulting to light without repairing browser data.
  * Returns: The saved appearance or light when storage is missing, invalid or unavailable.
  */
-export function getTheme() {
+export function getThemePreference() {
   try {
     const theme = localStorage.getItem(THEME_KEY);
     return theme === 'dark' || theme === 'light' ? theme : 'light';
@@ -138,14 +138,16 @@ export function getTheme() {
 
 /** Persist only an explicitly selected appearance, independently of demo domain data.
  * Args: theme is an exact light or dark preference, never coerced or serialized.
- * Returns: Whether best-effort persistence succeeded; failures never block appearance.
+ * Returns: An explicit success or safe categorized failure; failures never block appearance.
+ * @param {'light'|'dark'} theme Exact selected appearance.
+ * @returns {{ok: true, value: 'light'|'dark'}|{ok: false, error: 'invalid'|'quota'|'unavailable'|'unknown'}} Persistence result.
  */
-export function saveTheme(theme) {
-  if (theme !== 'light' && theme !== 'dark') return false;
+export function saveThemePreference(theme) {
+  if (theme !== 'light' && theme !== 'dark') return { ok: false, error: 'invalid' };
   try {
     localStorage.setItem(THEME_KEY, theme);
-    return true;
-  } catch {
-    return false;
+    return { ok: true, value: theme };
+  } catch (error) {
+    return { ok: false, error: storageFailure(error).error };
   }
 }

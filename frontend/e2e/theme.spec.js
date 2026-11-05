@@ -36,7 +36,8 @@ test('mobile public and workspace controls preserve dark across auth, reload and
   await expect(page.getByRole('button', { name: 'Switch to light mode' })).toBeVisible();
   await page.getByRole('button', { name: 'Toggle navigation' }).click();
   await page.getByRole('link', { name: 'All Blogs', exact: true }).click();
-  await expect(page.getByText('No posts yet', { exact: false }).first()).toBeVisible();
+  await expect(page).toHaveURL(/\/blogs$/);
+  await expect(page.getByText('No blogs yet. Be the first to write one!', { exact: true })).toBeVisible();
   const session = await page.evaluate(() => localStorage.getItem('writespace_session'));
   expect(JSON.parse(session)).toMatchObject({ username: 'admin', role: 'admin' });
   await page.reload();

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { getSession, homeFor } from './utils/auth.js';
-import { getTheme, saveTheme } from './utils/storage.js';
+import { getThemePreference, saveThemePreference } from './utils/storage.js';
 import { PublicNavbar } from './components/PublicNavbar.jsx';
 import { Navbar } from './components/Navbar.jsx';
 import { ProtectedRoute } from './components/ProtectedRoute.jsx';
@@ -41,7 +41,7 @@ function NotFound() {
 /** Refresh navigation identity after auth callbacks and each router location change. */
 export default function App() {
   const [session, setSession] = useState(getSession);
-  const [theme, setTheme] = useState(getTheme);
+  const [theme, setTheme] = useState(getThemePreference);
   const location = useLocation();
   useEffect(() => { setSession(getSession()); }, [location]);
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function App() {
   function toggleTheme() {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(nextTheme);
-    saveTheme(nextTheme);
+    saveThemePreference(nextTheme);
   }
 
   /** Re-read the durable session rather than trusting the submitted form result. */
