@@ -33,10 +33,17 @@ test('create both roles, publish as created writer, oversee as created admin, pr
   await expect(page).toHaveURL(/\/login$/);
   await login(page, 'admin', 'admin');
   await expect(page).toHaveURL(/\/admin$/);
+  if (!(await page.locator('html').evaluate((root) => root.classList.contains('dark')))) {
+    await page.getByRole('button', { name: /dark/i }).click();
+  }
+  await expect(page.locator('html')).toHaveClass(/dark/);
   await expect(page.getByText('No posts yet.', { exact: true })).toBeVisible();
   const pending = page.getByRole('region', { name: 'Total users', exact: true });
   await expect(pending).toContainText('—');
   await expect(pending).toContainText('Metric pending definition');
+  await expect(pending).toHaveCSS('background-color', 'rgb(15, 23, 42)');
+  await expect(pending).toHaveCSS('color', 'rgb(241, 245, 249)');
+  await expect(page.getByRole('region', { name: 'Recent posts' })).toHaveCSS('background-color', 'rgb(15, 23, 42)');
   expect(await stored(page, 'writespace_users')).toBeNull();
   const postsBeforeWriting = await stored(page, 'writespace_posts');
   const sessionBeforeWriting = await stored(page, 'writespace_session');
@@ -56,12 +63,16 @@ test('create both roles, publish as created writer, oversee as created admin, pr
   await expect(page.getByText('No posts yet.', { exact: true })).toBeVisible();
   await page.getByRole('link', { name: 'Manage Users', exact: true }).click();
   const table = page.getByRole('table', { name: 'User accounts' });
+  await expect(table.locator('thead')).toHaveCSS('background-color', 'rgb(30, 41, 59)');
+  await expect(page.getByLabel('Username', { exact: true })).toHaveCSS('background-color', 'rgb(2, 6, 23)');
   const permanent = table.getByRole('button', { name: 'Delete admin', exact: true });
   await expect(permanent).toBeDisabled();
   await expect(permanent).toHaveAttribute('title', 'Default admin cannot be deleted.');
   await page.getByRole('button', { name: 'Create User', exact: true }).click();
   for (const name of ['Display Name', 'Username', 'Password', 'Role']) {
     await expect(page.getByLabel(name, { exact: true })).toHaveAttribute('aria-invalid', 'true');
+    const errorId = await page.getByLabel(name, { exact: true }).getAttribute('aria-describedby');
+    await expect(page.locator('#' + errorId)).toHaveCSS('color', 'rgb(252, 165, 165)');
   }
   await create(page, 'Mira', 'mira', 'user');
   await create(page, 'Editor', 'editor', 'admin');
@@ -74,6 +85,8 @@ test('create both roles, publish as created writer, oversee as created admin, pr
   }
   expect(await stored(page, 'writespace_session')).toMatchObject({ userId: 'admin', role: 'admin' });
   await page.reload();
+  await expect(page.locator('html')).toHaveClass(/dark/);
+  await expect(table.getByText('user', { exact: true })).toHaveCSS('background-color', 'rgb(30, 27, 75)');
   await expect(table.getByText('Mira', { exact: true })).toBeVisible();
   await expect(table).not.toContainText('demo');
   await logout(page, 'Admin');
@@ -102,9 +115,12 @@ test('create both roles, publish as created writer, oversee as created admin, pr
   await page.getByRole('button', { name: 'Delete Reviewed notes', exact: true }).click();
   expect(await stored(page, 'writespace_posts')).toEqual([]);
   await page.getByRole('link', { name: 'Manage Users', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Create User', exact: true })).toHaveCSS('color', 'rgb(255, 255, 255)');
   const self = table.getByRole('button', { name: 'Delete editor', exact: true });
   await expect(self).toBeDisabled();
   await expect(self).toHaveAttribute('title', 'You cannot delete your current account.');
+  await expect(self).toHaveCSS('background-color', 'rgb(30, 41, 59)');
+  await expect(self).toHaveCSS('color', 'rgb(148, 163, 184)');
   await expect(permanent).toBeDisabled();
   page.once('dialog', (dialog) => dialog.dismiss());
   await table.getByRole('button', { name: 'Delete mira', exact: true }).click();
@@ -153,6 +169,10 @@ test('table at 640 and above, mobile cards below 640 preserve profile fields and
   await page.goto('/login');
   await login(page, 'admin', 'admin');
   await page.getByRole('link', { name: 'Manage Users', exact: true }).click();
+  if (!(await page.locator('html').evaluate((root) => root.classList.contains('dark')))) {
+    await page.getByRole('button', { name: /dark/i }).click();
+  }
+  await expect(page.locator('html')).toHaveClass(/dark/);
   await create(page, 'Mobile writer', 'mobile', 'user');
   const before = await stored(page, 'writespace_users');
   const table = page.getByRole('table', { name: 'User accounts' });
@@ -163,6 +183,9 @@ test('table at 640 and above, mobile cards below 640 preserve profile fields and
       await expect(table).toBeHidden();
       await expect(cards).toBeVisible();
       const profile = cards.getByRole('article', { name: 'Account mobile' });
+      await expect(profile).toHaveCSS('background-color', 'rgb(15, 23, 42)');
+      await expect(profile).toHaveCSS('color', 'rgb(241, 245, 249)');
+      await expect(profile.getByRole('button', { name: 'Delete mobile', exact: true })).toHaveCSS('color', 'rgb(252, 165, 165)');
       await expect(profile).toContainText('Mobile writer');
       await expect(profile).toContainText('mobile');
       await expect(profile).toContainText('user');
