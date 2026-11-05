@@ -6,7 +6,7 @@ import { getSession } from '../utils/auth.js';
 import { readPosts } from '../utils/storage.js';
 import { canMutatePost, createPost, editPost } from '../utils/posts.js';
 
-const focus = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2';
+const focus = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900';
 
 /** Prefill a permitted edit and preserve typed fields on every failed save.
  * Args: editing selects the existing-post route rather than new writing.
@@ -34,40 +34,94 @@ export default function WriteBlog({ editing = false }) {
   const errors = failure?.errors || {};
   const back = editing ? '/blog/' + encodeURIComponent(id) : '/blogs';
   return (
-    <main id="main" className="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16">
-      <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-700">WriteSpace / Your words</p>
-      <h1 className="mt-3 font-display text-4xl font-bold tracking-tight sm:text-5xl">{editing ? 'Edit Blog' : 'Write a Blog'}</h1>
-      <p className="mb-8 mt-3 text-slate-600">Plain text. Room to think. Saved only in this browser.</p>
+    <main id="main"
+      className="mx-auto max-w-4xl text-slate-900 dark:text-slate-100 px-4 py-12 sm:px-6 sm:py-16"
+    >
+      <p
+        className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-700 dark:text-indigo-300"
+      >
+        WriteSpace / Your words
+      </p>
+      <h1
+        className="mt-3 font-display text-4xl font-bold tracking-tight sm:text-5xl"
+      >
+        {editing ? 'Edit Blog' : 'Write a Blog'}
+      </h1>
+      <p
+        className="mb-8 mt-3 text-slate-600 dark:text-slate-300"
+      >
+        Plain text. Room to think. Saved only in this browser.
+      </p>
       {!source.ok && (
-        <p role="status" className="mb-6 rounded-xl bg-amber-50 p-4 text-amber-900">{source.message}</p>
+        <p role="status"
+          className="mb-6 rounded-xl bg-amber-50 dark:bg-amber-950 p-4 text-amber-900 dark:text-amber-200"
+        >
+          {source.message}
+        </p>
       )}
-      <form noValidate onSubmit={submit} className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+      <form noValidate onSubmit={submit}
+        className="space-y-6 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 shadow-sm sm:p-8"
+      >
         <div>
-          <label htmlFor="title" className="mb-2 block text-sm font-semibold">Title</label>
+          <label htmlFor="title"
+            className="mb-2 block text-sm font-semibold"
+          >
+            Title
+          </label>
           <input id="title" name="title" type="text" required aria-required="true"
             value={form.title} onChange={(event) => setForm({ ...form, title: event.target.value })}
             aria-invalid={Boolean(errors.title)} aria-describedby={errors.title ? 'title-error' : undefined}
-            className={'w-full rounded-xl border border-slate-300 px-4 py-3 ' + focus} />
+            className={
+              'w-full rounded-xl border border-slate-300 bg-white px-4 py-3 ' +
+              'dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 ' + focus
+            }
+          />
           {errors.title && (
-            <p id="title-error" role="alert" className="mt-2 text-sm text-red-700">{errors.title}</p>
+            <p id="title-error" role="alert"
+              className="mt-2 text-sm text-red-700 dark:text-red-300"
+            >
+              {errors.title}
+            </p>
           )}
         </div>
         <div>
-          <label htmlFor="content" className="mb-2 block text-sm font-semibold">Content</label>
+          <label htmlFor="content"
+            className="mb-2 block text-sm font-semibold"
+          >
+            Content
+          </label>
           <textarea id="content" name="content" required aria-required="true"
             value={form.content} onChange={(event) => setForm({ ...form, content: event.target.value })}
             aria-invalid={Boolean(errors.content)}
             aria-describedby={errors.content ? 'content-error content-count' : 'content-count'}
-            className={'min-h-64 w-full rounded-xl border border-slate-300 px-4 py-3 leading-relaxed ' + focus} />
-          <p id="content-count" className="mt-2 text-sm tabular-nums text-slate-600">{form.content.length} characters</p>
+            className={
+              'min-h-64 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 leading-relaxed ' +
+              'dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 ' + focus
+            }
+          />
+          <p id="content-count"
+            className="mt-2 text-sm tabular-nums text-slate-600 dark:text-slate-300"
+          >
+            {form.content.length} characters
+          </p>
           {errors.content && (
-            <p id="content-error" role="alert" className="mt-2 text-sm text-red-700">{errors.content}</p>
+            <p id="content-error" role="alert"
+              className="mt-2 text-sm text-red-700 dark:text-red-300"
+            >
+              {errors.content}
+            </p>
           )}
         </div>
         {failure && (
-          <p role="alert" className="rounded-xl bg-red-50 p-4 text-red-700">{failure.message}</p>
+          <p role="alert"
+            className="rounded-xl bg-red-50 dark:bg-red-950 p-4 text-red-700 dark:text-red-300"
+          >
+            {failure.message}
+          </p>
         )}
-        <div className="flex flex-col gap-3 md:flex-row">
+        <div
+          className="flex flex-col gap-3 md:flex-row"
+        >
           <button type="submit" className={
             'min-h-11 rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white shadow-sm hover:bg-indigo-700 ' +
             'motion-safe:transition-colors motion-reduce:transition-none ' + focus
@@ -75,7 +129,7 @@ export default function WriteBlog({ editing = false }) {
             Save
           </button>
           <Link to={back} className={
-            'inline-flex min-h-11 items-center justify-center rounded-xl px-5 py-3 font-medium text-slate-600 hover:bg-slate-100 ' +
+            'inline-flex min-h-11 items-center justify-center rounded-xl px-5 py-3 font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 ' +
             'motion-safe:transition-colors motion-reduce:transition-none ' + focus
           }>
             Cancel

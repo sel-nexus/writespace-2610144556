@@ -130,6 +130,30 @@ describe('blog listing and detail', () => {
   });
 });
 
+describe('dark post surfaces', () => {
+  it('keeps cards, reader, editor and required errors themed without changing saved data', async () => {
+    setSession(session);
+    savePosts([post()]);
+    localStorage.setItem('writespace_theme', 'dark');
+    mount();
+    const user = userEvent.setup();
+    expect(document.documentElement).toHaveClass('dark');
+    expect(screen.getByRole('article')).toHaveClass('dark:bg-slate-900');
+    expect(screen.getByRole('heading', { name: 'one' })).toHaveClass('dark:text-slate-100');
+    await user.click(screen.getByRole('link', { name: 'Read one' }));
+    expect(screen.getByRole('article')).toHaveClass('dark:bg-slate-900');
+    expect(screen.getByText('Original text')).toHaveClass('dark:text-slate-200');
+    await user.click(screen.getByRole('link', { name: 'Edit', exact: true }));
+    expect(screen.getByLabelText('Content')).toHaveClass('dark:bg-slate-800', 'dark:text-slate-100');
+    expect(screen.getByText('13 characters')).toHaveClass('dark:text-slate-300');
+    await user.clear(screen.getByLabelText('Content'));
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+    expect(screen.getByText('Content is required.', { exact: true })).toHaveClass('dark:text-red-300');
+    expect(screen.getByLabelText('Content')).toHaveAccessibleDescription(/Content is required.*0 characters/);
+    expect(readPosts().value).toEqual([post()]);
+  });
+});
+
 describe('writing form', () => {
   it.each(['/blogs', '/blog/one', '/write', '/edit/one'])('guards guest route %s', (path) => {
     mount(path); expect(screen.getByLabelText('Location')).toHaveTextContent('/login');
@@ -171,10 +195,56 @@ describe('writing form', () => {
   it.each([session, ADMIN_SESSION])('prefills edit and saves as $role without replacing original metadata', async (identity) => {
     setSession(identity); savePosts([post()]); mount('/edit/one');
     expect(screen.getByLabelText('Title')).toHaveValue('one'); expect(screen.getByLabelText('Content')).toHaveValue('Original text');
+    expect(screen.getByText('13 characters')).toBeVisible();
     const user = userEvent.setup(); await fill(user); savePosts([post(), post('concurrent')]);
+    expect(screen.getByText('11 characters')).toBeVisible();
     await user.click(screen.getByRole('button', { name: 'Save' }));
     expect(readPosts().value).toEqual([post('one', { title: 'New title', content: 'New content' }), post('concurrent')]);
     expect(screen.getByLabelText('Location')).toHaveTextContent('/blog/one');
+  });
+  it('counts live typing, whitespace and UTF-16 content, then resets after clearing without saving', async () => {
+    setSession(session);
+    mount('/write');
+    const user = userEvent.setup();
+    const content = screen.getByLabelText('Content');
+    expect(content).toHaveAccessibleDescription('0 characters');
+    expect(content).not.toHaveAttribute('maxlength');
+    await user.type(content, 'Hi');
+    expect(screen.getByText('2 characters')).toBeVisible();
+    await user.paste(' 🌿\n');
+    expect(content).toHaveValue('Hi 🌿\n');
+    expect(screen.getByText('6 characters')).toBeVisible();
+    await user.clear(content);
+    expect(screen.getByText('0 characters')).toBeVisible();
+    expect(localStorage.getItem(POSTS_KEY)).toBeNull();
+  });
+  it.each(['/write', '/edit/one'])('saves long content verbatim with only existing fields from %s', async (path) => {
+    setSession(session);
+    const original = post();
+    savePosts([original]);
+    mount(path);
+    const user = userEvent.setup();
+    const content = '  Long draft\n' + 'x'.repeat(10000) + '\n🌿  ';
+    await user.clear(screen.getByLabelText('Title'));
+    await user.type(screen.getByLabelText('Title'), 'Long title');
+    await user.clear(screen.getByLabelText('Content'));
+    await user.click(screen.getByLabelText('Content'));
+    await user.paste(content);
+    expect(screen.getByLabelText('Content')).not.toHaveAttribute('maxlength');
+    expect(screen.getByText(content.length + ' characters')).toBeVisible();
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+    const collection = readPosts().value;
+    const saved = path === '/write' ? collection[1] : collection[0];
+    expect(Object.keys(saved).sort()).toEqual(['authorId', 'authorName', 'content', 'createdAt', 'id', 'title']);
+    expect(saved).toMatchObject({ title: 'Long title', content, authorId: 'writer', authorName: 'Mira' });
+    if (path === '/edit/one') {
+      expect(collection).toEqual([{ ...original, title: 'Long title', content }]);
+    } else {
+      expect(collection[0]).toEqual(original);
+      expect(saved.id).toMatch(/^[0-9a-f-]{36}$/);
+      expect(Number.isNaN(Date.parse(saved.createdAt))).toBe(false);
+    }
+    expect(screen.getByRole('article').querySelector('p').textContent).toBe(content);
   });
   it.each(['/write', '/edit/one'])('Cancel from %s leaves storage untouched', async (path) => {
     setSession(session); savePosts([post()]); mount(path); const user = userEvent.setup(); await fill(user);
